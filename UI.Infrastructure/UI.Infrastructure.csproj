@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D9B482E0-1E76-4DFA-A73C-18A7D54B22D1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UI.Infrastructure</RootNamespace>
+    <AssemblyName>UI.Infrastructure</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;RELEASE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Fake|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Fake\</OutputPath>
+    <DefineConstants>FAKE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\packages\Rx-Core.2.1.30214.0\lib\Net45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\packages\Rx-Interfaces.2.1.30214.0\lib\Net45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IBarcodeReader.cs" />
+    <Compile Include="IBarcodeSubscriber.cs" />
+    <Compile Include="IDocumentManager.cs" />
+    <Compile Include="IDummyViewModel.cs" />
+    <Compile Include="IHandlerMessage.cs" />
+    <Compile Include="IHasAccessCatalog.cs" />
+    <Compile Include="ITitleBarViewModel.cs" />
+    <Compile Include="IRoutableViewModelManager.cs" />
+    <Compile Include="Messages\AuthentificationCompletedMessage.cs" />
+    <Compile Include="Messages\CommonMessage.cs" />
+    <Compile Include="Messages\EnteredBarcodeMessage.cs" />
+    <Compile Include="Messages\IQuestion.cs" />
+    <Compile Include="Messages\SaveAttachedDocumentMessage.cs" />
+    <Compile Include="IMainPageViewModel.cs" />
+    <Compile Include="EditState.cs" />
+    <Compile Include="IMessenger.cs" />
+    <Compile Include="Messages\UILoadedMessage.cs" />
+    <Compile Include="Messages\UpdateStateMessage.cs" />
+    <Compile Include="ViewModels\ActSelectionOfProbeDomain\IActSelectionOfProbeViewModel.cs" />
+    <Compile Include="ViewModels\ActSelectionOfProbeDomain\IEditableActSelectionOfProbeDepartmentRequirementViewModel.cs" />
+    <Compile Include="ViewModels\ActSelectionOfProbeDomain\IEditableActSelectionOfProbeDepartmentViewModel.cs" />
+    <Compile Include="ViewModels\ActSelectionOfProbeDomain\IEditableActSelectionOfProbeViewModel.cs" />
+    <Compile Include="ViewModels\AttachedDocumentDomain\IGetImageViewModel.cs" />
+    <Compile Include="ViewModels\AttachedDocumentDomain\IEditImageViewModel.cs" />
+    <Compile Include="ViewModels\CertificateQualityServiceDomain\ManufacturersCertificateDomain\IManufacturersCertificateViewModel.cs" />
+    <Compile Include="ViewModels\Common\ILinkViewModel.cs" />
+    <Compile Include="ViewModels\Common\IPrintTheDemandViewModel.cs" />
+    <Compile Include="ViewModels\ContractDomain\IContractViewModel.cs" />
+    <Compile Include="ViewModels\CuttingOrderDomain\ICuttingOrderMainViewModel.cs" />
+    <Compile Include="ViewModels\CuttingOrderDomain\ICuttingOrderViewModel.cs" />
+    <Compile Include="ViewModels\CuttingOrderDomain\ICuttingOrderDetailedViewModel.cs" />
+    <Compile Include="ViewModels\CuttingOrderDomain\ICuttingOrderMoveViewModel.cs" />
+    <Compile Include="ViewModels\CuttingOrderDomain\ICuttingOrderSpecificationViewModel.cs" />
+    <Compile Include="ViewModels\CuttingOrderDomain\ISampleViewModel.cs" />
+    <Compile Include="ViewModels\CuttingOrderDomain\ISampleSertificationViewModel.cs" />
+    <Compile Include="ViewModels\CuttingOrderDomain\ICertificationViewModel.cs" />
+    <Compile Include="ViewModels\CuttingOrderDomain\IEditableCuttingOrderMoveViewModel.cs" />
+    <Compile Include="ViewModels\CuttingOrderDomain\IEditableCuttingOrderSpecificztionViewModel.cs" />
+    <Compile Include="ViewModels\CuttingOrderDomain\IEditableSampleViewModel.cs" />
+    <Compile Include="ViewModels\CuttingOrderDomain\IEditableSampleSertificationViewModel.cs" />
+    <Compile Include="ViewModels\CuttingOrderDomain\IEditableCertificationViewModel.cs" />
+    <Compile Include="ViewModels\DepartmentOrderDomain\IDepartmentOrderViewModel.cs" />
+    <Compile Include="ViewModels\DepartmentOrderDomain\IEditDepartmentOrderViewModel.cs" />
+    <Compile Include="ViewModels\Filters\IActSelectionOfProbeFilterForView.cs" />
+    <Compile Include="ViewModels\Filters\ICertificateQualityRestFilterViewModel.cs" />
+    <Compile Include="ViewModels\Filters\IDepartmentOrderFilterViewModel.cs" />
+    <Compile Include="ViewModels\Filters\IFilterViewModelFactory.cs" />
+    <Compile Include="ViewModels\Filters\IWarehouseQualityCertificateFilterViewModel.cs" />
+    <Compile Include="ViewModels\IAttachedDocumentViewModel.cs" />
+    <Compile Include="ViewModels\IChangeStateViewModel.cs" />
+    <Compile Include="ViewModels\Filters\IPermissionMaterialExtensionsFilterViewModel.cs" />
+    <Compile Include="ViewModels\Filters\IPermissionMaterialFilterViewModel.cs" />
+    <Compile Include="ViewModels\Filters\ICuttingOrderFilterViewModel.cs" />
+    <Compile Include="ViewModels\IDocumentManagerViewModel.cs" />
+    <Compile Include="ViewModels\ISwitcherViewModel.cs" />
+    <Compile Include="ViewModels\PermissionMaterialDomain\IEditablePermissionMaterialExtensionViewModel.cs" />
+    <Compile Include="ViewModels\PermissionMaterialDomain\IEditablePermissionMaterialViewModel.cs" />
+    <Compile Include="ViewModels\PermissionMaterialDomain\IPermissionMaterialViewModel.cs" />
+    <Compile Include="ViewModels\PermissionMaterialDomain\IStatusPermissionMaterialUserViewModel.cs" />
+    <Compile Include="ViewModels\PlanReceiptOrderDomain\IChangeGroupStateViewModel.cs" />
+    <Compile Include="ViewModels\PlanReceiptOrderDomain\IEditableChemicalViewModel.cs" />
+    <Compile Include="ViewModels\IGetCatalogAccess.cs" />
+    <Compile Include="ViewModels\IAyncRunner.cs" />
+    <Compile Include="ViewModels\Filters\IPlanReceiptOrderPersonalAccountFilterViewModel.cs" />
+    <Compile Include="ViewModels\PlanReceiptOrderDomain\IEditableDestinationVIewModel.cs" />
+    <Compile Include="ViewModels\PlanReceiptOrderDomain\IEditablePassViewModel.cs" />
+    <Compile Include="ViewModels\PlanReceiptOrderDomain\IEditablePlanReceiptOrderViewModel.cs" />
+    <Compile Include="ViewModels\PlanReceiptOrderDomain\IEditablePersonalAccountViewModel.cs" />
+    <Compile Include="ViewModels\PlanReceiptOrderDomain\IEditablePlanCertificateViewModel.cs" />
+    <Compile Include="ViewModels\IInvokerViewModel.cs" />
+    <Compile Include="ViewModels\ILoginViewModel.cs" />
+    <Compile Include="ViewModels\PlanReceiptOrderDomain\IPersonalAccountViewModel.cs" />
+    <Compile Include="ViewModels\PlanReceiptOrderDomain\IPlanCertificateViewModel.cs" />
+    <Compile Include="ViewModels\IEditableViewModel.cs" />
+    <Compile Include="ViewModels\Filters\IProFilterViewModel.cs" />
+    <Compile Include="ViewModels\PlanReceiptOrderDomain\IPlanReceiptOrderViewModel.cs" />
+    <Compile Include="ViewModels\PlanReceiptOrderDomain\IPostingOfInventoryAtTheWarehouseViewModel.cs" />
+    <Compile Include="ViewModels\PlanReceiptOrderDomain\IStatusPersonalAccountViewModel.cs" />
+    <Compile Include="ViewModels\PlanReceiptOrderDomain\IStatusPlanReceiptOrderViewModel.cs" />
+    <Compile Include="ViewModels\PlanReceiptOrderDomain\IEditableMechanicViewModel.cs" />
+    <Compile Include="ViewModels\PlanReceiptOrderDomain\IStatusPlanCertificateViewModel.cs" />
+    <Compile Include="ViewModels\Settings\IEditorSettingViewModel.cs" />
+    <Compile Include="ViewModels\TestSheetsDomain\IEditableTestSheetViewModel.cs" />
+    <Compile Include="ViewModels\TestSheetsDomain\IEditableTestResultViewModel.cs" />
+    <Compile Include="ViewModels\TestSheetsDomain\ITestSheetsViewModel.cs" />
+    <Compile Include="ViewModels\WarehouseQualityCertificateDomain\IWarehouseQualityCertificateViewModel.cs" />
+    <Compile Include="ViewModels\WarehouseQualityCertificateDomain\IWarehouseQualityCertificateWithFilterViewModel.cs" />
+    <Compile Include="Views\IMessageViewer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ReactiveUI\ReactiveUI-master\ReactiveUI\ReactiveUI.csproj">
+      <Project>{292a477b-bb94-43c1-984e-e177ef9fedb7}</Project>
+      <Name>ReactiveUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Buisness.Entities\Buisness.Entities.csproj">
+      <Project>{5A3E6003-5AA4-4BEE-AE41-DC228A389F78}</Project>
+      <Name>Buisness.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Buisness.Filters\Buisness.Filters.csproj">
+      <Project>{5CE43B8C-1F48-4FA1-BBBF-5F55DF3A71C2}</Project>
+      <Name>Buisness.Filters</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Filtering.Infrastructure\Filtering.Infrastructure.csproj">
+      <Project>{1CAD3840-7203-4025-B21C-4D9EE9240E54}</Project>
+      <Name>Filtering.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Halfblood.Common\Halfblood.Common.csproj">
+      <Project>{0D7C5F69-FF6D-474C-B892-DE5EF71959C0}</Project>
+      <Name>Halfblood.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ParusModelLite\ParusModelLite.csproj">
+      <Project>{81A7E2E3-7589-402F-A047-6D5A74E759F6}</Project>
+      <Name>ParusModelLite</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UI.Entities\UI.Entities.csproj">
+      <Project>{5053FE4A-C57C-4A78-8883-587783098845}</Project>
+      <Name>UI.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\AttachedDocumentDomain\Filters\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,259 @@
+﻿<UserControl x:Class="UI.Components.CertificateQualityDomain.PermissionMaterialDomain.PermissionMaterialView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:permissionMaterialDomain="clr-namespace:UI.Infrastructure.ViewModels.PermissionMaterialDomain;assembly=UI.Infrastructure"
+             xmlns:permissionMaterialDomainLite="clr-namespace:ParusModelLite.CertificateQualityDomain.PermissionMaterialDomain;assembly=ParusModelLite"
+             xmlns:xaml="clr-namespace:ReactiveUI.Xaml;assembly=ReactiveUI.Xaml"
+             xmlns:converters="clr-namespace:UI.Components.Converters"
+             x:Name="Root"
+             d:DataContext="{d:DesignInstance permissionMaterialDomain:IPermissionMaterialViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox>
+            <GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="30" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Разрешения на условный допуск материала" />
+
+                    <TextBlock Grid.Column="1" Text="Количество выбранных записей: " />
+                    <TextBlock Grid.Column="2" x:Name="TxbSelectedRowsCount" />
+                    <Border Grid.Column="3" />
+                    <TextBlock Grid.Column="4" Text="Количество записей: " />
+                    <TextBlock Grid.Column="5" x:Name="TxbRowsCount" />
+                </Grid>
+            </GroupBox.Header>
+
+            <Grid x:Name="RootGrid">
+                <Grid.Resources>
+                    <ContextMenu x:Key="DataGridRowMenu">
+                        <MenuItem Name="EditRowMenuItem" Header="Редактировать" />
+                        <MenuItem Name="RemoveRowMenuItem" Header="Удалить" />
+                        <MenuItem Name="StatusRowMenuItem" Header="Статус" />
+                        <MenuItem Name="ExtendRowMenuItem" Header="Продлить допуск" />
+                    </ContextMenu>
+                    <ContextMenu x:Key="ExDataGridRowMenu">
+                        <MenuItem Name="ExInsertRowMenuItem" Header="Добавить" />
+                        <MenuItem Name="ExEditRowMenuItem" Header="Редактировать" />
+                        <MenuItem Name="ExRemoveRowMenuItem" Header="Удалить" />
+                    </ContextMenu>
+                    <ContextMenu x:Key="ExDataGridMenu">
+                        <MenuItem Name="ExInsertMenuItem" Header="Добавить" />
+                    </ContextMenu>
+                </Grid.Resources>
+
+                <controls:ProgressRing x:Name="BusyIndicator" Canvas.ZIndex="1" />
+
+                <DataGrid x:Name="DtPermissionMaterials"
+                        AutoGenerateColumns="False"
+                        GridLinesVisibility="All"
+                        RowDetailsVisibilityMode="VisibleWhenSelected"
+                        SelectionMode="Single"
+                        IsReadOnly="True"
+                        d:DataContext="{d:DesignInstance permissionMaterialDomainLite:PermissionMaterialLiteDto}" >
+                    <DataGrid.RowStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                            <Setter Property="ContextMenu" Value="{StaticResource DataGridRowMenu}" />
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=NomerCertifiacata}" Header="№ сертификата" />
+                        <DataGridTextColumn Binding="{Binding Path=FullRepresentattion}" Header="Обозначение сертификата" />
+                        <DataGridTextColumn Binding="{Binding Path=Cast}" Header="Плавка" />
+                        <DataGridTextColumn Binding="{Binding Path=Rn}" Header="Рег.номер" />
+                        <DataGridTextColumn Binding="{Binding Path=CreationDate, StringFormat={}{0:d}}" Header="Дата создания" />
+                        <DataGridTextColumn Binding="{Binding Path=AcceptToDate, StringFormat={}{0:d}}" Header="Дата окончания" />
+                        <DataGridTextColumn Header="Состояние">
+                            <DataGridTextColumn.Binding>
+                                <Binding Converter="{x:Static converters:PermissionMaterialStateConverter.Instance}"
+                                         Mode="OneWay"
+                                         Path="State" />
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=StateDate, StringFormat={}{0:d}}" Header="Дата смены состояния" />
+                        <DataGridTextColumn Binding="{Binding Path=Obj}" Header="Заказ, цехи-потребители" />
+                        <DataGridTextColumn Binding="{Binding Path=Count}" Header="Разрешенное количество" />
+                        <DataGridTextColumn Binding="{Binding Path=Justification}" Header="Обоснование необходимости запуска" />
+                        <DataGridTextColumn Binding="{Binding Path=Note}" Header="Примечание" />
+                        <DataGridTextColumn Binding="{Binding Path=Creator}" Header="Создатель" />
+                    </DataGrid.Columns>
+
+                    <DataGrid.RowDetailsTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.Background>
+                                    <SolidColorBrush Color="{DynamicResource WhiteColor}" />
+                                </Grid.Background>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="BorderThickness" Value="2" />
+                                        <Setter Property="BorderBrush">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="{DynamicResource AccentColor}" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <!-- список людей для согласования разрешения -->
+                                <GroupBox Header="Согласованно" Margin="30,3,3,3" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <DataGrid Name="DgPermisMatUser" 
+                                              Margin="4" 
+                                              AutoGenerateColumns="False"
+                                              IsReadOnly="True" 
+                                              SelectionMode="Single" 
+                                              GridLinesVisibility="All"
+                                              ItemsSource="{Binding ElementName=Root, Path=ViewModel.PermissionMaterialUserFilterViewModel.Result, Mode=OneWay}">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="ФИО" Binding="{Binding Path=Fullname}"/>
+                                            <DataGridTextColumn Header="Должность" Binding="{Binding Path=UserPsdepName}"/>
+                                            <DataGridTextColumn Header="Цех/отдел" Binding="{Binding Path=UserDept}"/>
+                                            <DataGridTextColumn Header="Состояние">
+                                                <DataGridTextColumn.Binding>
+                                                    <Binding Converter="{x:Static converters:PermissionMaterialUserStateConverter.Instance}"
+                                                            Mode="OneWay"
+                                                            Path="State" />
+                                                </DataGridTextColumn.Binding>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="Дата смены состояния" Binding="{Binding Path=StateDate, StringFormat={}{0:d}}"/>
+                                            <DataGridTextColumn Header="Примечание" Binding="{Binding Path=Note}"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </GroupBox>
+
+                                <Border Width="2" Grid.Row="0" Margin="5,0,0,0" HorizontalAlignment="Left" />
+                                <Border Width="25" Grid.Row="1" Height="2" Margin="5,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <Border Width="2" Grid.Row="1" Height="20" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+                                <!-- продление разрешений -->
+                                <GroupBox Header="Продление разрешения на условный допуск" Margin="30,5,0,20" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+
+                                        <DataGrid x:Name="DtPermissionMaterialsExtensions"
+                                                    AutoGenerateColumns="False"
+                                                    ContextMenu="{StaticResource ExDataGridMenu}"
+                                                    GridLinesVisibility="All"
+                                                    IsReadOnly="True"
+                                                    SelectionMode="Single"
+                                                    SelectedItem="{Binding ElementName=Root, Path=ViewModel.SelectedPermissionMaterialEx, Mode=TwoWay}"
+                                                    ItemsSource="{Binding ElementName=Root, Path=ViewModel.PermissionMaterialExtensionFilterViewModel.Result}">
+                                            <DataGrid.RowStyle>
+                                                <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                                                    <Setter Property="ContextMenu" Value="{StaticResource ExDataGridRowMenu}" />
+                                                </Style>
+                                            </DataGrid.RowStyle>
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Binding="{Binding Path=AcceptToDate, StringFormat={}{0:d}}" Header="Продлить до даты" />
+                                                <DataGridTextColumn Binding="{Binding Path=CreationDate, StringFormat={}{0:d}}" Header="Дата создания" />
+                                                <DataGridTextColumn Header="Состояние">
+                                                    <DataGridTextColumn.Binding>
+                                                        <Binding Converter="{x:Static converters:PermissionMaterialExtensionStateConverter.Instance}"
+                                                            Mode="OneWay"
+                                                            Path="State" />
+                                                    </DataGridTextColumn.Binding>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Header="Дата смены состояния" Binding="{Binding Path=StateDate, StringFormat={}{0:d}}"/>
+                                                <DataGridTextColumn Binding="{Binding Path=Creator.Firstname}" Header="Создатель" />
+                                            </DataGrid.Columns>
+
+                                            <DataGrid.RowDetailsTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.Resources>
+                                                            <Style TargetType="{x:Type Border}">
+                                                                <Setter Property="BorderThickness" Value="2" />
+                                                                <Setter Property="BorderBrush">
+                                                                    <Setter.Value>
+                                                                        <SolidColorBrush Color="{DynamicResource AccentColor}" />
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Style>
+                                                        </Grid.Resources>
+                                                        <Grid.Background>
+                                                            <SolidColorBrush Color="{DynamicResource WhiteColor}" />
+                                                        </Grid.Background>
+                                                        <!-- список людей для согласования продления разрешения -->
+                                                        <Border Width="25" Height="2" Margin="5,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                                        <Border Width="2" Height="20" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"  />
+
+                                                        <GroupBox Header="Согласованно" Margin="30,3,3,3"
+                                                                  HorizontalAlignment="Left" VerticalAlignment="Top">
+
+                                                            <DataGrid Name="DgPermisMatUserEx" Margin="4" AutoGenerateColumns="False"
+                                                                      IsReadOnly="True" SelectionMode="Single" GridLinesVisibility="All"
+                                                                      ItemsSource="{Binding ElementName=Root, Path=ViewModel.SelectedPermissionMaterialEx.PmeUsers, Mode=OneWay}">
+                                                                <DataGrid.Columns>
+                                                                    <DataGridTextColumn Header="ФИО" Binding="{Binding Path=Fullname}"/>
+                                                                    <DataGridTextColumn Header="Должность" Binding="{Binding Path=UserPsdepName}"/>
+                                                                    <DataGridTextColumn Header="Цех/отдел" Binding="{Binding Path=UserDept}"/>
+                                                                    <DataGridTextColumn Header="Состояние">
+                                                                        <DataGridTextColumn.Binding>
+                                                                            <Binding Converter="{x:Static converters:PermissionMaterialUserStateConverter.Instance}"
+                                                                                    Mode="OneWay"
+                                                                                    Path="State" />
+                                                                        </DataGridTextColumn.Binding>
+                                                                    </DataGridTextColumn>
+                                                                    <DataGridTextColumn Header="Дата смены состояния" Binding="{Binding Path=StateDate, StringFormat={}{0:d}}"/>
+                                                                    <DataGridTextColumn Header="Примечание" Binding="{Binding Path=Note}"/>
+                                                                </DataGrid.Columns>
+                                                            </DataGrid>
+                                                        </GroupBox>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </DataGrid.RowDetailsTemplate>
+                                        </DataGrid>
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGrid.RowDetailsTemplate>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+
+        <Expander Grid.Column="1" ExpandDirection="Right" IsExpanded="True">
+            <Expander.HeaderTemplate>
+                <DataTemplate>
+                    <Border Margin="0,80,-50,0" BorderThickness="0,0,0,3">
+                        <Border.RenderTransform>
+                            <TransformGroup>
+                                <RotateTransform Angle="-90" />
+                            </TransformGroup>
+                        </Border.RenderTransform>
+                        <TextBlock FontSize="20"
+                                   RenderTransformOrigin="0.5,0.5"
+                                   Text=" ПОИСК ">
+                        </TextBlock>
+                    </Border>
+                </DataTemplate>
+            </Expander.HeaderTemplate>
+
+            <xaml:ViewModelViewHost x:Name="PermissionMaterialFilterView"
+                                Transition="SlideLeft"
+                                ViewModel="{Binding Path=PermissionMaterialFilterViewModel}" />
+        </Expander>
+    </Grid>
+</UserControl>                    

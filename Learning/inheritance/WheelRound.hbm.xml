@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping schema="Parusl" assembly="Learning" namespace="Learning" xmlns="urn:nhibernate-mapping-2.2">
+  <subclass name="WheelRound" extends="Figure" discriminator-value="Color">
+    <!--<property name="Color" type="String">
+      <column name="Color" not-null="true" />
+    </property>-->
+  </subclass>
+</hibernate-mapping>

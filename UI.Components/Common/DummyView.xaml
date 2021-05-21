@@ -1,0 +1,159 @@
+﻿<UserControl x:Class="UI.Components.Common.DummyView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:commonDomain="clr-namespace:Buisness.Entities.CommonDomain;assembly=Buisness.Entities"
+             xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+             xmlns:converters="clr-namespace:UI.Components.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:infrastructure="clr-namespace:UI.Infrastructure;assembly=UI.Infrastructure"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch"
+             HorizontalContentAlignment="Stretch"
+             VerticalContentAlignment="Stretch"
+             d:DataContext="{d:DesignInstance infrastructure:IDummyViewModel}"
+             d:DesignHeight="300"
+             d:DesignWidth="1000"
+             mc:Ignorable="d">
+
+    <Grid Width="960">
+        <metro:ProgressRing x:Name="ProgressRing" />
+        <GroupBox x:Name="RootGroupBox"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  HorizontalContentAlignment="Stretch"
+                  VerticalContentAlignment="Stretch"
+                  Header="выдача материала">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Margin="2,2,0,0" Text="Склад" />
+                <TextBlock Grid.Row="1"
+                           Grid.Column="0"
+                           Margin="2,2,0,0"
+                           Text="Количество" />
+                <TextBlock Grid.Row="2"
+                           Grid.Column="0"
+                           Margin="2,2,0,0"
+                           Text="Номер заборной книги" />
+                <TextBlock Grid.Row="3"
+                           Grid.Column="0"
+                           Margin="2,2,0,0"
+                           Text="Дата заборной книги" />
+                <TextBlock Grid.Row="4"
+                           Grid.Column="0"
+                           Margin="2,2,0,0"
+                           Text="Кладовщик центрального склада" />
+                <TextBlock Grid.Row="5"
+                           Grid.Column="0"
+                           Margin="2,2,0,0"
+                           Text="Представитель ОТК" />
+
+
+                <Grid Grid.Row="0" Grid.Column="1">
+                    <controls:AutoCompleteBox x:Name="DepartmenAcb" Margin="2,2,0,0" />
+                    <metro:MetroProgressBar x:Name="StoreProgressBar"
+                                            Canvas.ZIndex="1"
+                                            Style="{DynamicResource MetroProgressBarStyle}" />
+                </Grid>
+                <TextBox x:Name="QuantityTextBox"
+                         Grid.Row="1"
+                         Grid.Column="1"
+                         Margin="2,2,0,0" />
+
+                <TextBox x:Name="NumberOfBookTextBox"
+                         Grid.Row="2"
+                         Grid.Column="1"
+                         Margin="2,2,0,0" />
+                <DatePicker x:Name="DatePickerTextBox"
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Margin="2,2,0,0" />
+
+                <controls:AutoCompleteBox Name="StoreEmployeeAcb"
+                                          Grid.Row="4"
+                                          Grid.Column="1"
+                                          Margin="2,2,0,0"
+                                          SelectedItem="{Binding Path=SelectedEmployeeStore,
+                                                                 Mode=TwoWay,
+                                                                 UpdateSourceTrigger=PropertyChanged,
+                                                                 ValidatesOnDataErrors=True,
+                                                                 Converter={x:Static converters:MapperConverter.Instance}}"
+                                          metro:TextboxHelper.ClearTextButton="True">
+                    <controls:AutoCompleteBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock d:DataContext="{d:DesignInstance commonDomain:EmployeeDto}">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} ({1} - {2})">
+                                        <Binding Mode="OneWay" Path="Fullname" />
+                                        <Binding Mode="OneWay" Path="Dept" />
+                                        <Binding Mode="OneWay" Path="PsdepName" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </controls:AutoCompleteBox.ItemTemplate>
+                </controls:AutoCompleteBox>
+                <metro:MetroProgressBar x:Name="StoreEmployeeBusy"
+                                        Grid.Row="4"
+                                        Grid.Column="1"
+                                        Width="{Binding ElementName=StoreEmployeeAcb,
+                                                        Path=ActualWidth}"
+                                        Style="{DynamicResource MetroProgressBarStyle}" />
+
+
+                <controls:AutoCompleteBox Name="OtkEmployeeAcb"
+                                          Grid.Row="5"
+                                          Grid.Column="1"
+                                          Margin="2,2,0,0"
+                                          SelectedItem="{Binding Path=SelectedEmployeeOtk,
+                                                                 Mode=TwoWay,
+                                                                 UpdateSourceTrigger=PropertyChanged,
+                                                                 ValidatesOnDataErrors=True,
+                                                                 Converter={x:Static converters:MapperConverter.Instance}}"
+                                          metro:TextboxHelper.ClearTextButton="True">
+                    <controls:AutoCompleteBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock d:DataContext="{d:DesignInstance commonDomain:EmployeeDto}">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} ({1} - {2})">
+                                        <Binding Mode="OneWay" Path="Fullname" />
+                                        <Binding Mode="OneWay" Path="Dept" />
+                                        <Binding Mode="OneWay" Path="PsdepName" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </controls:AutoCompleteBox.ItemTemplate>
+                </controls:AutoCompleteBox>
+                <metro:MetroProgressBar x:Name="OtkEmployeeBusy"
+                                        Grid.Row="5"
+                                        Grid.Column="1"
+                                        Width="{Binding ElementName=OtkEmployeeAcb,
+                                                        Path=ActualWidth}"
+                                        Style="{DynamicResource MetroProgressBarStyle}" />
+
+                <Button x:Name="DealButton"
+                        Grid.Row="7"
+                        Grid.Column="1"
+                        Margin="2,2,0,0"
+                        Content="Выдать" />
+
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

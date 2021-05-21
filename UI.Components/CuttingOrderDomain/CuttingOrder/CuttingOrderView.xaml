@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="UI.Components.CuttingOrderDomain.CuttingOrder.CuttingOrderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:infrastructure="clr-namespace:UI.Infrastructure;assembly=UI.Infrastructure"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <GroupBox Header="Наряды на раскрой">
+        <Grid x:Name="RootGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.Resources>
+                <ContextMenu x:Key="DataGridRowMenu">
+                    <MenuItem Name="DetaileViewRowMenuItem" Header="Детализация" />
+                    <MenuItem Name="StatusRowMenuItem" Header="Статус" />
+                    <!--
+                        <MenuItem Name="InsertRowMenuItem"
+                        CommandParameter="{x:Static infrastructure:EditState.Insert}"
+                        Header="Добавить" />
+                        <MenuItem Name="EditRowMenuItem"
+                        CommandParameter="{x:Static infrastructure:EditState.Edit}"
+                        Header="Редактировать" />
+                    -->
+                </ContextMenu>
+                <ContextMenu x:Key="DataGridMenu">
+                    <MenuItem Name="InsertMenuItem"
+                              CommandParameter="{x:Static infrastructure:EditState.Insert}"
+                              Header="Добавить" />
+                </ContextMenu>
+            </Grid.Resources>
+            <controls:ProgressRing x:Name="BusyIndicator" Canvas.ZIndex="1" />
+            <DataGrid x:Name="DtGridCuttingOrders"
+                      Grid.Row="0"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      SelectionMode="Single">
+                <DataGrid.RowStyle>
+                    <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                        <Setter Property="ContextMenu" Value="{StaticResource DataGridRowMenu}" />
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Path=Pref}" Header="Префикс" />
+                    <DataGridTextColumn Binding="{Binding Path=Numb}" Header="№ наряда" />
+                    <DataGridTextColumn Binding="{Binding Path=CreationDate}" Header="Дата создания" />
+                    <DataGridTextColumn Binding="{Binding Path=Creator.Firstname}" Header="Создатель" />
+                    <DataGridTextColumn Binding="{Binding Path=AssumeDate}" Header="Дата допуска" />
+                    <DataGridTextColumn Binding="{Binding Path=Inspector.Firstname}" Header="Контролер" />
+                    <DataGridTextColumn Binding="{Binding Path=Storekeeper.Firstname}" Header="Кладовщик" />
+                    <DataGridTextColumn Binding="{Binding Path=DateDocumentIntegration}" Header="Дата комплектования" />
+                    <DataGridTextColumn Binding="{Binding Path=Department.CODE}" Header="Цех" />
+                    <DataGridTextColumn Binding="{Binding Path=District.CODE}" Header="Участок" />
+                    <DataGridTextColumn Header="Исполнитель" />
+                    <DataGridTextColumn Binding="{Binding Path=Priority}" Header="Приоритет" />
+                    <DataGridTextColumn Header="Материал" />
+                    <DataGridTextColumn Header="Держатель" />
+                    <DataGridTemplateColumn Header="ДСЕ">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ListBox DisplayMemberPath="NomModif.MODIFCode" ItemsSource="{Binding Path=Specifications}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Сертификаты" />
+                    <DataGridTextColumn Binding="{Binding Path=State}" Header="Состояние" />
+                    <DataGridTextColumn Binding="{Binding Path=Note}" Header="Примечание" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Grid.Row="1" Click="Button_Click_1" />
+        </Grid>
+    </GroupBox>
+</UserControl>

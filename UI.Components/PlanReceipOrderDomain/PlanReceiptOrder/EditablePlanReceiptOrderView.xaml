@@ -1,0 +1,334 @@
+﻿<UserControl x:Class="UI.Components.PlanReceipOrderDomain.PlanReceiptOrder.EditablePlanReceiptOrderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:common="clr-namespace:UI.Components.Common"
+             xmlns:commonDomain="clr-namespace:UI.Entities.CommonDomain;assembly=UI.Entities"
+             xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+             xmlns:converters="clr-namespace:UI.Components.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:infrastructure="clr-namespace:UI.Infrastructure;assembly=UI.Infrastructure"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:planReceiptOrderDomain="clr-namespace:UI.Infrastructure.ViewModels.PlanReceiptOrderDomain;assembly=UI.Infrastructure"
+             Padding="10"
+             d:DataContext="{d:DesignInstance planReceiptOrderDomain:IEditablePlanReceiptOrderViewModel}"
+             d:DesignHeight="600"
+             d:DesignWidth="500"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <Style x:Key="Separator" TargetType="Border">
+            <Setter Property="Margin" Value="2" />
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto">
+        <GroupBox Width="960"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch">
+            <GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Name="Title"
+                               Margin="20,0"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Center" />
+                    <StackPanel Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal">
+                        <Button x:Name="BtnApply" Style="{DynamicResource SaveButtonStyle}" />
+                        <Separator />
+                    </StackPanel>
+                </Grid>
+            </GroupBox.Header>
+
+            <Grid Margin="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <metro:ProgressRing x:Name="ProgressRing"
+                                    Grid.RowSpan="2"
+                                    Canvas.ZIndex="1" />
+
+                <Grid x:Name="Root"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid HorizontalAlignment="Center" Visibility="{Binding Path=EditState, Converter={x:Static converters:IsEditableToVisibilityConverter.Instance}, ConverterParameter={x:Static infrastructure:EditState.Edit}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="Numb"
+                                   Grid.Column="2"
+                                   HorizontalAlignment="Stretch"
+                                   FontFamily="Segoe UI"
+                                   FontSize="18">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}Документ: {1}-{0} от {2}">
+                                    <Binding Mode="OneWay" Path="EditableObject.Numb" />
+                                    <Binding Mode="OneWay" Path="EditableObject.Pref" />
+                                    <Binding Mode="OneWay" Path="EditableObject.CreationDate" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Grid>
+                    <GroupBox Grid.Row="1" Header="Доступные каталоги">
+                        <common:AcatalogView x:Name="AcatalogView"
+                                             IsEnabled="False"
+                                             SelectedItem="{Binding Path=EditableObject.Catalog,
+                                                                    Mode=TwoWay,
+                                                                    ValidatesOnDataErrors=True}" />
+                    </GroupBox>
+                    <!--  РЕКВИЗИТЫ  -->
+                    <GroupBox Grid.Row="2" Header="Склад">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Склад" />
+                            <ComboBox x:Name="CmbStore"
+                                      Grid.Column="2"
+                                      HorizontalAlignment="Stretch"
+                                      HorizontalContentAlignment="Stretch"
+                                      IsEditable="True"
+                                      SelectedValue="469 (Склад калиброванного и нержавеющего проката) "
+                                      SelectedValuePath="Code"
+                                      Text="{Binding Path=EditableObject.StoreGasStationOilDepot,
+                                                     Mode=OneWay,
+                                                     UpdateSourceTrigger=PropertyChanged}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                                <ComboBox.SelectedItem>
+                                    <Binding Converter="{x:Static converters:MapperConverter.Instance}"
+                                             Mode="TwoWay"
+                                             Path="EditableObject.StoreGasStationOilDepot"
+                                             UpdateSourceTrigger="PropertyChanged"
+                                             ValidatesOnDataErrors="True" />
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Grid.Row="3"
+                              HorizontalContentAlignment="Stretch"
+                              Header="Документ основания накладная">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="Тип документа накладная" />
+                            <ComboBox x:Name="CmbGroundDocType"
+                                      Grid.Column="2"
+                                      IsEditable="True"
+                                      SelectedValue="ТН"
+                                      SelectedValuePath="Code">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                                <ComboBox.SelectedItem>
+                                    <Binding Converter="{x:Static converters:MapperConverter.Instance}"
+                                             Mode="TwoWay"
+                                             Path="EditableObject.GroundTypeOfDocument"
+                                             UpdateSourceTrigger="PropertyChanged"
+                                             ValidatesOnDataErrors="True" />
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
+
+
+                            <Border Grid.Row="1"
+                                    Grid.ColumnSpan="3"
+                                    Style="{StaticResource Separator}" />
+                            <TextBlock Grid.Row="2" Grid.Column="0">Номер основания накладная</TextBlock>
+                            <TextBox x:Name="GroundDocNumb"
+                                     Grid.Row="2"
+                                     Grid.Column="2">
+                                <TextBox.Text>
+                                    <Binding Mode="TwoWay"
+                                             Path="EditableObject.GroundDocumentNumb"
+                                             UpdateSourceTrigger="PropertyChanged"
+                                             ValidatesOnDataErrors="True" />
+                                </TextBox.Text>
+                            </TextBox>
+                            <Border Grid.Row="3"
+                                    Grid.ColumnSpan="3"
+                                    Style="{StaticResource Separator}" />
+                            <TextBlock Grid.Row="4" Text="Дата основания накладная" />
+                            <DatePicker x:Name="GroundDocDate"
+                                        Grid.Row="4"
+                                        Grid.Column="2"
+                                        HorizontalAlignment="Left">
+                                <DatePicker.SelectedDate>
+                                    <Binding Mode="TwoWay"
+                                             Path="EditableObject.GroundDocumentDate"
+                                             UpdateSourceTrigger="PropertyChanged"
+                                             ValidatesOnDataErrors="True" />
+                                </DatePicker.SelectedDate>
+                            </DatePicker>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Grid.Row="4" Header="Сопроводительный документ">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock>Тип сопроводительного документа</TextBlock>
+                            <ComboBox x:Name="CmbGroundReceiptTypeOfDocument"
+                                      Grid.Column="2"
+                                      HorizontalAlignment="Stretch"
+                                      HorizontalContentAlignment="Stretch"
+                                      IsEditable="True"
+                                      SelectedValue="ТТН"
+                                      SelectedValuePath="Code">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                                <ComboBox.SelectedItem>
+                                    <Binding Converter="{x:Static converters:MapperConverter.Instance}"
+                                             Mode="TwoWay"
+                                             Path="EditableObject.GroundReceiptTypeOfDocument"
+                                             UpdateSourceTrigger="PropertyChanged"
+                                             ValidatesOnDataErrors="True" />
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
+
+                            <Border Grid.Row="1"
+                                    Grid.ColumnSpan="3"
+                                    Style="{StaticResource Separator}" />
+
+                            <TextBlock Grid.Row="2">Номер сопроводительного документа</TextBlock>
+                            <TextBox x:Name="GroundReceiptDocNumb"
+                                     Grid.Row="2"
+                                     Grid.Column="2">
+                                <TextBox.Text>
+                                    <Binding Mode="TwoWay"
+                                             Path="EditableObject.GroundReceiptDocumentNumb"
+                                             UpdateSourceTrigger="PropertyChanged"
+                                             ValidatesOnDataErrors="True" />
+                                </TextBox.Text>
+                            </TextBox>
+
+                            <Border Grid.Row="3"
+                                    Grid.ColumnSpan="3"
+                                    Style="{StaticResource Separator}" />
+                            <TextBlock Grid.Row="4" Grid.Column="0">Дата сопроводительного документа</TextBlock>
+                            <DatePicker x:Name="GroundReceiptDocumentDate"
+                                        Grid.Row="4"
+                                        Grid.Column="2"
+                                        HorizontalAlignment="Left">
+                                <DatePicker.SelectedDate>
+                                    <Binding Mode="TwoWay"
+                                             Path="EditableObject.GroundReceiptDocumentDate"
+                                             UpdateSourceTrigger="PropertyChanged"
+                                             ValidatesOnDataErrors="True" />
+                                </DatePicker.SelectedDate>
+                            </DatePicker>
+
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Grid.Row="5" Header="Поставщик">
+                        <Grid>
+                            <controls:AutoCompleteBox Name="AcbUserContractor"
+                                                      SelectedItem="{Binding Path=EditableObject.UserContractor,
+                                                                             Mode=TwoWay,
+                                                                             UpdateSourceTrigger=PropertyChanged,
+                                                                             ValidatesOnDataErrors=True,
+                                                                             Converter={x:Static converters:MapperConverter.Instance}}"
+                                                      metro:TextboxHelper.ClearTextButton="True">
+                                <controls:AutoCompleteBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=OrganizationName}" d:DataContext="{d:DesignInstance commonDomain:User}" />
+                                    </DataTemplate>
+                                </controls:AutoCompleteBox.ItemTemplate>
+                            </controls:AutoCompleteBox>
+                            <metro:MetroProgressBar x:Name="BusyUser"
+                                                    Width="{Binding ElementName=AcbUserContractor,
+                                                                    Path=ActualWidth}"
+                                                    Style="{DynamicResource MetroProgressBarStyle}" />
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Grid.Row="6"
+                              VerticalAlignment="Stretch"
+                              VerticalContentAlignment="Stretch"
+                              Header="Дополнительно">
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock>Примечание</TextBlock>
+                            <TextBox x:Name="Note"
+                                     Grid.Column="2"
+                                     HorizontalAlignment="Stretch"
+                                     VerticalAlignment="Stretch"
+                                     HorizontalContentAlignment="Stretch"
+                                     VerticalContentAlignment="Stretch"
+                                     AcceptsReturn="True"
+                                     TextWrapping="Wrap"
+                                     VerticalScrollBarVisibility="Auto">
+                                <TextBox.Text>
+                                    <Binding Mode="TwoWay"
+                                             Path="EditableObject.Note"
+                                             UpdateSourceTrigger="PropertyChanged"
+                                             ValidatesOnDataErrors="True" />
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </Grid>
+        </GroupBox>
+    </ScrollViewer>
+</UserControl>

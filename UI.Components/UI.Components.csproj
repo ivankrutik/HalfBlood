@@ -1,0 +1,797 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E56B5E81-5A00-48D3-9CDC-3B0793D0ECA3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UI.Components</RootNamespace>
+    <AssemblyName>UI.Components</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>True</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>True</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsMissingPublicRequiresAsWarnings>True</CodeContractsMissingPublicRequiresAsWarnings>
+    <CodeContractsInferRequires>True</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsSQLServerOption />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
+    <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
+    <CodeContractsRuntimeCheckingLevel>None</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;RELEASE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Fake|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Fake\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;FAKE;CONTRACTS_FULL</DefineConstants>
+    <DebugType>full</DebugType>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>True</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>True</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsMissingPublicRequiresAsWarnings>True</CodeContractsMissingPublicRequiresAsWarnings>
+    <CodeContractsInferRequires>True</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsSQLServerOption />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
+    <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility" />
+    <Reference Include="FluentValidation, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FluentValidation.4.0.0.0\lib\Net40\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="GongSolutions.Wpf.DragDrop">
+      <HintPath>..\packages\gong-wpf-dragdrop.0.1.3.7\lib\net40\GongSolutions.Wpf.DragDrop.dll</HintPath>
+    </Reference>
+    <Reference Include="GraphSharp">
+      <HintPath>..\packages\GraphSharp.1.1.0.0\lib\net40\GraphSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="GraphSharp.Controls">
+      <HintPath>..\packages\GraphSharp.1.1.0.0\lib\net40\GraphSharp.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Blend.Interctivity.WPF.v4.0.1.0.3\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>C:\Program Files (x86)\Microsoft.NET\Primary Interop Assemblies\Microsoft.mshtml.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="PresentationUI, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="QuickGraph">
+      <HintPath>..\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.dll</HintPath>
+    </Reference>
+    <Reference Include="ReachFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Reactive.Core, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Core.2.1.30214.0\lib\Net40\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Interfaces.2.1.30214.0\lib\Net40\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Linq.2.1.30214.0\lib\Net40\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Controls.Input.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Layout.Toolkit">
+      <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Blend.Interctivity.WPF.v4.0.1.0.3\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WPFExtensions">
+      <HintPath>..\packages\WPFExtensions.1.0.0\lib\WPFExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\WPFToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.0.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AttachedDocument\AttachedDocumentView.xaml.cs">
+      <DependentUpon>AttachedDocumentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AttachedDocument\EditImageView.xaml.cs">
+      <DependentUpon>EditImageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AttachedDocument\ScanningView.xaml.cs">
+      <DependentUpon>ScanningView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CertificateQualityDomain\ActSelectionProbeDomain\EditableActSelectionOfProbeDepartmentRequirementView.xaml.cs">
+      <DependentUpon>EditableActSelectionOfProbeDepartmentRequirementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CertificateQualityDomain\ActSelectionProbeDomain\EditableActSelectionOfProbeDepartmentView.xaml.cs">
+      <DependentUpon>EditableActSelectionOfProbeDepartmentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CertificateQualityDomain\ActSelectionProbeDomain\EditableActSelectionOfProbeView.xaml.cs">
+      <DependentUpon>EditableActSelectionOfProbeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CertificateQualityDomain\ManufacturersCertificateDomain\ManufacturersCertificateFilterView.xaml.cs">
+      <DependentUpon>ManufacturersCertificateFilterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CertificateQualityDomain\PermissionMaterialDomain\StatusPermissionMaterialDomain\StatusPermissionMaterialUserView.xaml.cs">
+      <DependentUpon>StatusPermissionMaterialUserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CertificateQualityDomain\WarehouseQualityCertificateDomain\WarehouseQualityCertificateFilterView.xaml.cs">
+      <DependentUpon>WarehouseQualityCertificateFilterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CertificateQualityDomain\WarehouseQualityCertificateDomain\WarehouseQualityCertificateView.xaml.cs">
+      <DependentUpon>WarehouseQualityCertificateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CertificateQualityDomain\WarehouseQualityCertificateDomain\WarehouseQualityCertificateWithFilterView.xaml.cs">
+      <DependentUpon>WarehouseQualityCertificateWithFilterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\DummyView.xaml.cs">
+      <DependentUpon>DummyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\PrintTheDemandView.xaml.cs">
+      <DependentUpon>PrintTheDemandView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\TestView.xaml.cs">
+      <DependentUpon>TestView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentLauncher.cs" />
+    <Compile Include="ContractDomain\ContractView.xaml.cs">
+      <DependentUpon>ContractView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\ImageToBitmapSourceConverter.cs" />
+    <Compile Include="Converters\IsEmptyCollectionToVisibilityConverter.cs" />
+    <Compile Include="Controls\ModernDialog.cs" />
+    <Compile Include="Converters\DateTimeValueConverter.cs" />
+    <Compile Include="Converters\InverseBoolConverter.cs" />
+    <Compile Include="Common\LinkView.xaml.cs">
+      <DependentUpon>LinkView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\IsEmptyToVisibilityConverter.cs" />
+    <Compile Include="Converters\NameOfSectionSystemConverter.cs" />
+    <Compile Include="Converters\SelectedItemsConverter.cs" />
+    <Compile Include="Converters\StateEntityConverter.cs" />
+    <Compile Include="DepartmentOrderDomain\DeliveryHistoryView.xaml.cs">
+      <DependentUpon>DeliveryHistoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DepartmentOrderDomain\DepartmentOrderFilterView.xaml.cs">
+      <DependentUpon>DepartmentOrderFilterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CertificateQualityDomain\ActSelectionProbeDomain\ActSelectionOfProbeView.xaml.cs">
+      <DependentUpon>ActSelectionOfProbeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CertificateQualityDomain\ManufacturersCertificateDomain\ManufacturersCertificateView.xaml.cs">
+      <DependentUpon>ManufacturersCertificateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CertificateQualityDomain\PermissionMaterialDomain\EditablePermissionMaterialExtensionView.xaml.cs">
+      <DependentUpon>EditablePermissionMaterialExtensionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CertificateQualityDomain\PermissionMaterialDomain\EditablePermissionMaterialView.xaml.cs">
+      <DependentUpon>EditablePermissionMaterialView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\ConvertHelper.cs" />
+    <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="Helpers\MenuHelpers.cs" />
+    <Compile Include="Helpers\GraphLayout.cs" />
+    <Compile Include="Helpers\VisualSearcherHelpers.cs">
+      <DependentUpon>PermissionMaterialPageView.xaml.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CertificateQualityDomain\PermissionMaterialDomain\PermissionMaterialView.xaml.cs">
+      <DependentUpon>PermissionMaterialView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DepartmentOrderDomain\DepartmentOrderView.xaml.cs">
+      <DependentUpon>DepartmentOrderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DepartmentOrderDomain\EditDepartmentOrderView.xaml.cs">
+      <DependentUpon>EditDepartmentOrderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\AcatalogView.xaml.cs">
+      <DependentUpon>AcatalogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PanAndZoom.cs" />
+    <Compile Include="Converters\ImageToBitmapSource.cs" />
+    <Compile Include="Converters\IsEditableToVisibilityConverter.cs" />
+    <Compile Include="Converters\MapperConverter.cs" />
+    <Compile Include="CuttingOrderDomain\CuttingOrderMainView.xaml.cs">
+      <DependentUpon>CuttingOrderMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CuttingOrderDomain\CuttingOrderMove\CuttingOrderMoveView.xaml.cs">
+      <DependentUpon>CuttingOrderMoveView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CuttingOrderDomain\CuttingOrderSpecification\CuttingOrderSpecificationView.xaml.cs">
+      <DependentUpon>CuttingOrderSpecificationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CuttingOrderDomain\CuttingOrderSpecification\EditableCuttingOrderSpecificationView.xaml.cs">
+      <DependentUpon>EditableCuttingOrderSpecificationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CuttingOrderDomain\CuttingOrder\CuttingOrderView.xaml.cs">
+      <DependentUpon>CuttingOrderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CuttingOrderDomain\CuttingOrder\CuttingOrderDetailedView.xaml.cs">
+      <DependentUpon>CuttingOrderDetailedView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CuttingOrderDomain\SampleSertification\SampleSertificationView.xaml.cs">
+      <DependentUpon>SampleSertificationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CuttingOrderDomain\Sample\SampleView.xaml.cs">
+      <DependentUpon>SampleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CuttingOrderDomain\Certification\CertificationView.xaml.cs">
+      <DependentUpon>CertificationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Filters\ActSelectionOfProbeFilterView.xaml.cs">
+      <DependentUpon>ActSelectionOfProbeFilterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Filters\PermissionMaterialFilterView.xaml.cs">
+      <DependentUpon>PermissionMaterialFilterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Filters\PROFilterView.xaml.cs">
+      <DependentUpon>PROFilterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Filters\CuttingOrderFilterView.xaml.cs">
+      <DependentUpon>CuttingOrderFilterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\BindingHelper.cs" />
+    <Compile Include="Helpers\DisposableContext.cs" />
+    <Compile Include="Hook\WebBrowserHook.cs" />
+    <Compile Include="MessageViewer.cs" />
+    <Compile Include="MainPageView.xaml.cs">
+      <DependentUpon>MainPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NotifyMessagWindows\AnimatedLocation.cs" />
+    <Compile Include="NotifyMessagWindows\DelegateCommand.cs" />
+    <Compile Include="NotifyMessagWindows\NotifyMessage.cs" />
+    <Compile Include="NotifyMessagWindows\NotifyMessageManager.cs" />
+    <Compile Include="NotifyMessagWindows\NotifyMessageViewModel.cs" />
+    <Compile Include="NotifyMessagWindows\NotifyMessageWindow.xaml.cs">
+      <DependentUpon>NotifyMessageWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NotifyMessagWindows\Screen.cs" />
+    <Compile Include="PlanReceipOrderDomain\PersonalAccount\EditablePersonalAccountView.xaml.cs">
+      <DependentUpon>EditablePersonalAccountView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\DragAndDropHelper.cs" />
+    <Compile Include="PlanReceipOrderDomain\PlanCertificate\ChemicalElementView.xaml.cs">
+      <DependentUpon>ChemicalElementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlanReceipOrderDomain\PlanCertificate\EditableDestinationView.xaml.cs">
+      <DependentUpon>EditableDestinationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlanReceipOrderDomain\PlanCertificate\EditablePassView.xaml.cs">
+      <DependentUpon>EditablePassView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlanReceipOrderDomain\PlanCertificate\EditablePlanCertificateView.xaml.cs">
+      <DependentUpon>EditablePlanCertificateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlanReceipOrderDomain\PlanCertificate\MechanicElementView.xaml.cs">
+      <DependentUpon>MechanicElementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlanReceipOrderDomain\PlanCertificate\StatusPlanCertificateView.xaml.cs">
+      <DependentUpon>StatusPlanCertificateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlanReceipOrderDomain\PlanReceiptOrder\EditablePlanReceiptOrderView.xaml.cs">
+      <DependentUpon>EditablePlanReceiptOrderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlanReceipOrderDomain\PlanCertificate\PlanCertificateView.xaml.cs">
+      <DependentUpon>PlanCertificateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlanReceipOrderDomain\PlanReceiptOrder\GroupStatusPlanReceiptOrder.xaml.cs">
+      <DependentUpon>GroupStatusPlanReceiptOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlanReceipOrderDomain\PlanReceiptOrder\PlanReceiptOrderView.xaml.cs">
+      <DependentUpon>PlanReceiptOrderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlanReceipOrderDomain\PersonalAccount\StatusPersonalAccountView.xaml.cs">
+      <DependentUpon>StatusPersonalAccountView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlanReceipOrderDomain\PlanReceiptOrder\StatusPlanReceiptOrderView.xaml.cs">
+      <DependentUpon>StatusPlanReceiptOrderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlanReceipOrderDomain\PostingOfInventoryAtTheWarehouseView.xaml.cs">
+      <DependentUpon>PostingOfInventoryAtTheWarehouseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\OpenBrowserStrategy.cs" />
+    <Compile Include="RxRouting.cs" />
+    <Compile Include="Settings\ActSelectionOfProbeViewSetting.cs" />
+    <Compile Include="Settings\Adjusters\ActSelectionOfProbeViewAdjuster.cs" />
+    <Compile Include="Settings\Adjusters\ColorAdjuster.cs" />
+    <Compile Include="Settings\Adjusters\PlanReceiptOrderViewAdjuster.cs" />
+    <Compile Include="Settings\Adjusters\PostingOfInventoryAtTheWarehouseViewAdjuster.cs" />
+    <Compile Include="Settings\ColorSettingEditorView.xaml.cs">
+      <DependentUpon>ColorSettingEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\DataGridSetting.cs" />
+    <Compile Include="Settings\EditorSettingView.xaml.cs">
+      <DependentUpon>EditorSettingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\ColorSettingEditorViewModel.cs" />
+    <Compile Include="Settings\ColorSetting.cs" />
+    <Compile Include="Settings\Interceptors\ActSelectionOfProbeViewInterceptor.cs" />
+    <Compile Include="Settings\Interceptors\PlanreceiptOrderViewInterceptor.cs" />
+    <Compile Include="Settings\Interceptors\PostingOfInventoryAtTheWarehouseViewInterceptor.cs" />
+    <Compile Include="Settings\ISaveUiSetting.cs" />
+    <Compile Include="Settings\PlanReceiptOrderViewSetting.cs" />
+    <Compile Include="Settings\PostingOfInventoryAtTheWarehouseViewSetting.cs" />
+    <Compile Include="SwitcherView.xaml.cs">
+      <DependentUpon>SwitcherView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestSheetsDomain\DataTemplateSelector\TestSheetResultsPresenterTemplateSelector.cs" />
+    <Compile Include="TestSheetsDomain\EditableTestResultsView.xaml.cs">
+      <DependentUpon>EditableTestResultsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestSheetsDomain\EditableTestSheetView.xaml.cs">
+      <DependentUpon>EditableTestSheetView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestSheetsDomain\TestSheetsView.xaml.cs">
+      <DependentUpon>TestSheetsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TitleBarView.xaml.cs">
+      <DependentUpon>TitleBarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Validation\ValidationRules\ActSelectionOfProbeDepartmentValidator.cs" />
+    <Compile Include="Validation\ValidationRules\ActSelectionOfProbeValidator.cs" />
+    <Compile Include="Validation\ValidationRules\AttachedDocumentValidator.cs" />
+    <Compile Include="Validation\ValidationRules\CertificateQualityValidator.cs" />
+    <Compile Include="Validation\ValidationRules\ChemicalIndicatorValueValidator.cs" />
+    <Compile Include="Validation\ValidationRules\DestinationValidator.cs" />
+    <Compile Include="Validation\FluentValidatorMixin.cs" />
+    <Compile Include="Validation\ValidationRules\MechanicIndicatorValueValidator.cs" />
+    <Compile Include="Validation\ValidationRules\PassValidator.cs" />
+    <Compile Include="Validation\ValidationRules\PermissionMaterialExtensionValidator.cs" />
+    <Compile Include="Validation\ValidationRules\PermissionMaterialValidator.cs" />
+    <Compile Include="Validation\ValidationRules\PersonalAccountValidator.cs" />
+    <Compile Include="Validation\ValidationRules\PlanCertificateValidator.cs" />
+    <Compile Include="Validation\ValidationRules\PlanReceiptOrderPersonalAccountValidator.cs" />
+    <Compile Include="Validation\ValidationRules\PlanReceiptOrderValidator.cs" />
+    <Compile Include="BarcodeReader.cs" />
+    <Compile Include="ViewLocatorEx.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="AttachedDocument\AttachedDocumentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AttachedDocument\EditImageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AttachedDocument\ScanningView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CertificateQualityDomain\ActSelectionProbeDomain\EditableActSelectionOfProbeDepartmentRequirementView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CertificateQualityDomain\ActSelectionProbeDomain\EditableActSelectionOfProbeDepartmentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CertificateQualityDomain\ActSelectionProbeDomain\EditableActSelectionOfProbeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CertificateQualityDomain\ManufacturersCertificateDomain\ManufacturersCertificateFilterView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CertificateQualityDomain\PermissionMaterialDomain\StatusPermissionMaterialDomain\StatusPermissionMaterialUserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CertificateQualityDomain\WarehouseQualityCertificateDomain\WarehouseQualityCertificateFilterView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CertificateQualityDomain\WarehouseQualityCertificateDomain\WarehouseQualityCertificateView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CertificateQualityDomain\WarehouseQualityCertificateDomain\WarehouseQualityCertificateWithFilterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\DummyView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Common\LinkView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\PrintTheDemandView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\TestView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ContractDomain\ContractView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DepartmentOrderDomain\DeliveryHistoryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DepartmentOrderDomain\DepartmentOrderFilterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CertificateQualityDomain\ManufacturersCertificateDomain\ManufacturersCertificateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CertificateQualityDomain\ActSelectionProbeDomain\ActSelectionOfProbeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CertificateQualityDomain\PermissionMaterialDomain\EditablePermissionMaterialExtensionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CertificateQualityDomain\PermissionMaterialDomain\EditablePermissionMaterialView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CertificateQualityDomain\PermissionMaterialDomain\PermissionMaterialView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Common\AcatalogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CuttingOrderDomain\CuttingOrderMainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CuttingOrderDomain\CuttingOrderMove\CuttingOrderMoveView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CuttingOrderDomain\CuttingOrderSpecification\CuttingOrderSpecificationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CuttingOrderDomain\CuttingOrderSpecification\EditableCuttingOrderSpecificationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CuttingOrderDomain\CuttingOrder\CuttingOrderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CuttingOrderDomain\CuttingOrder\CuttingOrderDetailedView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CuttingOrderDomain\SampleSertification\SampleSertificationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CuttingOrderDomain\Sample\SampleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CuttingOrderDomain\Certification\CertificationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DepartmentOrderDomain\DepartmentOrderView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DepartmentOrderDomain\EditDepartmentOrderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Filters\ActSelectionOfProbeFilterView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Filters\PermissionMaterialFilterView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Filters\PROFilterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Filters\CuttingOrderFilterView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NotifyMessagWindows\NotifyMessageWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PlanReceipOrderDomain\PersonalAccount\EditablePersonalAccountView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlanReceipOrderDomain\PlanCertificate\EditableDestinationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlanReceipOrderDomain\PlanCertificate\ChemicalElementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlanReceipOrderDomain\PlanCertificate\EditablePassView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlanReceipOrderDomain\PlanCertificate\EditablePlanCertificateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlanReceipOrderDomain\PlanCertificate\MechanicElementView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PlanReceipOrderDomain\PlanCertificate\StatusPlanCertificateView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PlanReceipOrderDomain\PlanReceiptOrder\EditablePlanReceiptOrderView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PlanReceipOrderDomain\PlanCertificate\PlanCertificateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlanReceipOrderDomain\PlanReceiptOrder\GroupStatusPlanReceiptOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlanReceipOrderDomain\PlanReceiptOrder\PlanReceiptOrderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlanReceipOrderDomain\PersonalAccount\StatusPersonalAccountView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlanReceipOrderDomain\PlanReceiptOrder\StatusPlanReceiptOrderView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PlanReceipOrderDomain\PostingOfInventoryAtTheWarehouseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Settings\ColorSettingEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Settings\EditorSettingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SwitcherView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestSheetsDomain\EditableTestResultsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestSheetsDomain\EditableTestSheetView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestSheetsDomain\TestSheetsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Style.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TitleBarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro\MahApps.Metro.NET45.csproj">
+      <Project>{942d11c4-29f5-46c4-8c14-4b976d56c637}</Project>
+      <Name>MahApps.Metro.NET45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ReactiveUI\ReactiveUI-master\ReactiveUI.Platforms\ReactiveUI.Xaml_Net45.csproj">
+      <Project>{1ce2d235-8072-4649-ba5a-cfb1af8776e0}</Project>
+      <Name>ReactiveUI.Xaml_Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ReactiveUI\ReactiveUI-master\ReactiveUI\ReactiveUI.csproj">
+      <Project>{292a477b-bb94-43c1-984e-e177ef9fedb7}</Project>
+      <Name>ReactiveUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Buisness.Entities\Buisness.Entities.csproj">
+      <Project>{5a3e6003-5aa4-4bee-ae41-dc228a389f78}</Project>
+      <Name>Buisness.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Buisness.Filters\Buisness.Filters.csproj">
+      <Project>{5CE43B8C-1F48-4FA1-BBBF-5F55DF3A71C2}</Project>
+      <Name>Buisness.Filters</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Filtering.Infrastructure\Filtering.Infrastructure.csproj">
+      <Project>{1CAD3840-7203-4025-B21C-4D9EE9240E54}</Project>
+      <Name>Filtering.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Halfblood.AlgorithmsOfCalculation\Halfblood.AlgorithmsOfCalculation.csproj">
+      <Project>{dec5077c-ebb6-43a8-a89e-ccf8450b65f1}</Project>
+      <Name>Halfblood.AlgorithmsOfCalculation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Halfblood.Common\Halfblood.Common.csproj">
+      <Project>{0d7c5f69-ff6d-474c-b892-de5ef71959c0}</Project>
+      <Name>Halfblood.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ParusModelLite\ParusModelLite.csproj">
+      <Project>{81A7E2E3-7589-402F-A047-6D5A74E759F6}</Project>
+      <Name>ParusModelLite</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UI.Entities\UI.Entities.csproj">
+      <Project>{5053FE4A-C57C-4A78-8883-587783098845}</Project>
+      <Name>UI.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UI.Infrastructure\UI.Infrastructure.csproj">
+      <Project>{d9b482e0-1e76-4dfa-a73c-18a7d54b22d1}</Project>
+      <Name>UI.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UI.Resources\UI.Resources.csproj">
+      <Project>{d5ce193d-f0f8-4e9b-b8df-0244b5153e1a}</Project>
+      <Name>UI.Resources</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fix me.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y “$(ProjectDir)Bin\$(ConfigurationName)\$(TargetFileName)” “D:\Repositories\HalfbloodApp\configurations\CommonLib\$(TargetFileName)”</PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

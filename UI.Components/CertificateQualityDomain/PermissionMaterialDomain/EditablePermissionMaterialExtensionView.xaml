@@ -1,0 +1,178 @@
+﻿<UserControl x:Class="UI.Components.CertificateQualityDomain.PermissionMaterialDomain.EditablePermissionMaterialExtensionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:permissionMaterialDomain="clr-namespace:UI.Infrastructure.ViewModels.PermissionMaterialDomain;assembly=UI.Infrastructure"
+             xmlns:converters="clr-namespace:UI.Components.Converters"
+             xmlns:infrastructure="clr-namespace:UI.Infrastructure;assembly=UI.Infrastructure"
+             xmlns:resources="clr-namespace:UI.Resources;assembly=UI.Resources"
+             xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+             xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:buisnessEntites="clr-namespace:Buisness.Entities.CommonDomain;assembly=Buisness.Entities"
+             d:DataContext="{d:DesignInstance permissionMaterialDomain:IEditablePermissionMaterialExtensionViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="330" d:DesignWidth="970">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                  VerticalScrollBarVisibility="Auto" Margin="10">
+        <GroupBox Width="960" VerticalAlignment="Top">
+            <GroupBox.Header>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <TextBlock Name="Title"
+                               Margin="20,0"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Center" />
+                    <Button x:Name="BtnApply"
+                            HorizontalAlignment="Right"
+                            Command="{Binding Path=ApplyCommand}"
+                            Style="{DynamicResource SaveButtonStyle}"
+                            ToolTip="{x:Static resources:ToolTipMessages.Save}" />
+                    <Separator />
+                </StackPanel>
+            </GroupBox.Header>
+
+            <Grid x:Name="Root" Margin="10">
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
+                    <Style BasedOn="{StaticResource MetroComboBox}" TargetType="ComboBox">
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
+                    <Style BasedOn="{StaticResource MetroDatePicker}" TargetType="DatePicker">
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                    </Style>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid HorizontalAlignment="Center" 
+                      Visibility="{Binding Path=EditState, Converter={x:Static converters:IsEditableToVisibilityConverter.Instance}, 
+                                    ConverterParameter={x:Static infrastructure:EditState.Edit}}">
+                    <TextBlock x:Name="Numb" HorizontalAlignment="Stretch" FontFamily="Segoe UI" FontSize="18">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}Документ: {0} от {1}">
+                                <Binding Mode="OneWay" Path="EditableObject.Rn" />
+                                <Binding Mode="OneWay" Path="EditableObject.CreationDate" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </Grid>
+
+                <GroupBox Header="Основные данные" Grid.Row="1">
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Разрешение до даты"/>
+                        <DatePicker Grid.Column="2" HorizontalAlignment="Left">
+                            <DatePicker.SelectedDate>
+                                <Binding Mode="TwoWay"
+                                         Path="EditableObject.AcceptToDate"
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         ValidatesOnDataErrors="True" />
+                            </DatePicker.SelectedDate>
+                        </DatePicker>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="Список людей для согласования разрешения" Grid.Row="2" >
+                    <Grid Margin="10">
+                        <Grid.Resources>
+                            <Style BasedOn="{StaticResource MetroButton}" TargetType="{x:Type Button}">
+                                <Setter Property="Margin" Value="4,0"/>
+                                <Setter Property="Width" Value="70"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".6*"/>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width=".3*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <controls:AutoCompleteBox Name="AcbPermisMatExUser" metro:TextboxHelper.ClearTextButton="True">
+                            <controls:AutoCompleteBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock d:DataContext="{d:DesignInstance buisnessEntites:EmployeeDto}">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} ({1} - {2})">
+                                                <Binding Mode="OneWay" Path="Fullname" />
+                                                <Binding Mode="OneWay" Path="Dept" />
+                                                <Binding Mode="OneWay" Path="PsdepName" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </controls:AutoCompleteBox.ItemTemplate>
+                        </controls:AutoCompleteBox>
+                        <metro:MetroProgressBar x:Name="BusyUser" Grid.Row="0" Grid.Column="0"
+                                                Width="{Binding ElementName=AcbPermisMatExUser, Path=ActualWidth}"
+                                                Style="{DynamicResource MetroProgressBarStyle}" />
+
+                        <Button Content="Добавить" Grid.Row="0" Grid.Column="2"
+                                x:Name="BtnAddUser"
+                                Command="{Binding Path=ApplyCommand}"
+                                ToolTip="Добавить работника в список лиц для согласования" />
+                        <Button Content="Удалить" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left"
+                                x:Name="BtnRemoveUser"
+                                Command="{Binding Path=ApplyCommand}"
+                                ToolTip="Удалить работника из списка лиц для согласования" />
+
+                        <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" 
+                                  AutoGenerateColumns="False" Margin="4" Name="DgPermisMatUser"  
+                                  IsReadOnly="True" SelectionMode="Single" GridLinesVisibility="All"
+                                  ItemsSource="{Binding Path=EditableObject.PmeUsers}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ФИО" Binding="{Binding Path=Fullname}"/>
+                                <DataGridTextColumn Header="Должность" Binding="{Binding Path=UserPsdepName}"/>
+                                <DataGridTextColumn Header="Цех/отдел" Binding="{Binding Path=UserDept}"/>
+                                <DataGridTextColumn Header="Состояние">
+                                    <DataGridTextColumn.Binding>
+                                        <Binding Converter="{x:Static converters:PermissionMaterialStateConverter.Instance}"
+                                                Mode="OneWay"
+                                                Path="State" />
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Дата" Binding="{Binding Path=StateDate, StringFormat={}{0:d}}"/>
+                                <DataGridTextColumn Header="Примечание" Binding="{Binding Path=Note}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </GroupBox>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="3">
+                    <TextBlock Text="Дата создания:"/>
+                    <Border Width="5" Height="10"/>
+                    <TextBlock Text="{Binding Path=EditableObject.CreationDate}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="4">
+                    <TextBlock Text="Создатель:"/>
+                    <Border Width="5" Height="10"/>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}({0}) - {1}">
+                                <Binding Mode="OneWay" Path="EditableObject.Creator.Rn" />
+                                <Binding Mode="OneWay" Path="EditableObject.Creator.Firstname" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+    </ScrollViewer>
+</UserControl>

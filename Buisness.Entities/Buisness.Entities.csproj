@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5A3E6003-5AA4-4BEE-AE41-DC228A389F78}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Buisness.Entities</RootNamespace>
+    <AssemblyName>Buisness.Entities</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;RELEASE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Fake|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Fake\</OutputPath>
+    <DefineConstants>FAKE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AttachedDocumentDomain\AttachedDocumentTypeDto.cs" />
+    <Compile Include="AttachedDocumentDomain\AttachedDocumentDto.cs" />
+    <Compile Include="CatalogDto.cs" />
+    <Compile Include="CertificateQualityDomain\ActSelectionProbeDomain\ActSelectionOfProbeDto.cs" />
+    <Compile Include="CertificateQualityDomain\ActSelectionProbeDomain\ActSelectionOfProbeDepartmentDto.cs" />
+    <Compile Include="CertificateQualityDomain\ActSelectionProbeDomain\RequirementsDto.cs" />
+    <Compile Include="CertificateQualityDomain\DictionaryChemicalIndicatorDto.cs" />
+    <Compile Include="CertificateQualityDomain\DictionaryMechanicalIndicatorDto.cs" />
+    <Compile Include="CertificateQualityDomain\ManufacturersCertificateDomain\CertificateQualityAttachedDocumentDto.cs" />
+    <Compile Include="PermissionMaterialDomain\PermissionMaterialExtensionUserDto.cs" />
+    <Compile Include="PermissionMaterialDomain\PermissionMaterialUserDto.cs" />
+    <Compile Include="CertificateQualityDomain\WarehouseQualityCertificateDomain\WarehouseQualityCertificate.cs" />
+    <Compile Include="CommonDomain\BatchDto.cs" />
+    <Compile Include="CommonDomain\CatalogHierarchical.cs" />
+    <Compile Include="CommonDomain\EmployeeDto.cs" />
+    <Compile Include="CommonDomain\GoodsManager.cs" />
+    <Compile Include="CommonDomain\GoodsPartyDto.cs" />
+    <Compile Include="CommonDomain\KindOfWarehouseOperationsDto.cs" />
+    <Compile Include="CommonDomain\LegalPersonDto.cs" />
+    <Compile Include="CommonDomain\NameOfCurrencyDto.cs" />
+    <Compile Include="CommonDomain\StoreGasStationOilDepotDto.cs" />
+    <Compile Include="CommonDomain\TaxBandDto.cs" />
+    <Compile Include="CommonDomain\UnitFunctionDto.cs" />
+    <Compile Include="CommonDomain\TaxDto.cs" />
+    <Compile Include="ContractDomain\ContractDto.cs" />
+    <Compile Include="ContractDomain\PlanAndSpecificationDto.cs" />
+    <Compile Include="CuttingOrderDomain\CuttingOrderDto.cs" />
+    <Compile Include="CuttingOrderDomain\CuttingOrderMoveDto.cs" />
+    <Compile Include="CuttingOrderDomain\CuttingOrderSpecificationDto.cs" />
+    <Compile Include="CuttingOrderDomain\SampleDto.cs" />
+    <Compile Include="CuttingOrderDomain\SampleCertificationDto.cs" />
+    <Compile Include="CuttingOrderDomain\CertificationDto.cs" />
+    <Compile Include="DepartmentOrderDomain\DepartmentOrderDto.cs" />
+    <Compile Include="DepartmentOrderDomain\DepartmentOrderCommentDto.cs" />
+    <Compile Include="DepartmentOrderDomain\DepartmentOrderSpecifacationDto.cs" />
+    <Compile Include="CertificateQualityDomain\ManufacturersCertificateDomain\ChemicalIndicatorValueDto.cs" />
+    <Compile Include="CertificateQualityDomain\ManufacturersCertificateDomain\MechanicIndicatorValueDto.cs" />
+    <Compile Include="ExpenditureInvoiceDomain\ExpenditureInvoiceDto.cs" />
+    <Compile Include="ExpenditureInvoiceDomain\ExpenditureInvoiceSpecificationDto.cs" />
+    <Compile Include="IAttachedDocument.cs" />
+    <Compile Include="IHasBinary.cs" />
+    <Compile Include="NomenclatorDomain\NomenclatureNumberDto.cs" />
+    <Compile Include="NomenclatorDomain\NomenclatureNumberModificationDto.cs" />
+    <Compile Include="CommonDomain\PersonalAccountDto.cs" />
+    <Compile Include="ContractDomain\StagesOfTheContractDto.cs" />
+    <Compile Include="CommonDomain\UnitOfMeasureDto.cs" />
+    <Compile Include="CertificateQualityDomain\ActInputControlTechnicalStateDto.cs" />
+    <Compile Include="CertificateQualityDomain\ApplySolutionByRemarkDto.cs" />
+    <Compile Include="CertificateQualityDomain\ActInputControlDomain\ActInputControlDestinationDto.cs" />
+    <Compile Include="CertificateQualityDomain\ActInputControlDomain\ActInputControlDto.cs" />
+    <Compile Include="CertificateQualityDomain\ActInputControlDomain\ActInputControlFunctioningDto.cs" />
+    <Compile Include="CertificateQualityDomain\ActInputControlDomain\ActInputControlFunctioningSignatureDto.cs" />
+    <Compile Include="CertificateQualityDomain\ActInputControlDomain\ConclusionDto.cs" />
+    <Compile Include="CertificateQualityDomain\ActInputControlDomain\ConclusionEssentialDto.cs" />
+    <Compile Include="CertificateQualityDomain\ActInputControlDomain\QualityStateControlOfTheMakeDto.cs" />
+    <Compile Include="CertificateQualityDomain\ActInputControlDomain\QualityStateControlOfTheMakeSignatureDto.cs" />
+    <Compile Include="CertificateQualityDomain\ActInputControlDomain\TheMoveActDto.cs" />
+    <Compile Include="CertificateQualityDomain\ManufacturersCertificateDomain\CertificateQualityDto.cs" />
+    <Compile Include="CommonDomain\StaffingDivisionDto.cs" />
+    <Compile Include="CertificateQualityDomain\ManufacturersCertificateDomain\DestinationDto.cs" />
+    <Compile Include="CertificateQualityDomain\ManufacturersCertificateDomain\PassDto.cs" />
+    <Compile Include="CertificateQualityDomain\DictionaryPassDto.cs" />
+    <Compile Include="PermissionMaterialDomain\PermissionMaterialExtensionDto.cs" />
+    <Compile Include="PermissionMaterialDomain\PermissionMaterialDto.cs" />
+    <Compile Include="PlanReceiptOrderDomain\PlanReceiptOrderPersonalAccountDto.cs" />
+    <Compile Include="PlanReceiptOrderDomain\PlanCertificateDto.cs" />
+    <Compile Include="PlanReceiptOrderDomain\PlanReceiptOrderDto.cs" />
+    <Compile Include="CertificateQualityDomain\SolutionByNoteDto.cs" />
+    <Compile Include="CertificateQualityDomain\TechnicalStateEssentialDto.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CommonDomain\UserDto.cs" />
+    <Compile Include="TestSheetDomain\IHasRowNumber.cs" />
+    <Compile Include="TestSheetDomain\TestResultDto.cs" />
+    <Compile Include="TestSheetDomain\HeatTreatmentDto.cs" />
+    <Compile Include="TestSheetDomain\SampleResultSetDto.cs" />
+    <Compile Include="TestSheetDomain\TestSheetDto.cs" />
+    <Compile Include="TypeOfDocumentDto.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Halfblood.Common\Halfblood.Common.csproj">
+      <Project>{0d7c5f69-ff6d-474c-b892-de5ef71959c0}</Project>
+      <Name>Halfblood.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <UsingTask TaskName="NotifyPropertyWeaverMsBuildTask.WeavingTask" AssemblyFile="$(SolutionDir)Tools\NotifyPropertyWeaverMsBuildTask.dll" />
+  <Target Name="AfterCompile">
+    <NotifyPropertyWeaverMsBuildTask.WeavingTask />
+  </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+</Project>

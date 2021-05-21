@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{45300226-7666-4373-B4AB-0723C12A164C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Buisness.InternalEntity</RootNamespace>
+    <AssemblyName>Buisness.InternalEntity</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Filters\AcatalogFilter.cs" />
+    <Compile Include="Filters\UserListFilter.cs" />
+    <Compile Include="Strategies\AcatalogFilterStrategy.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Filters\RoleFilter.cs" />
+    <Compile Include="Filters\SectionOfSystemFilter.cs" />
+    <Compile Include="Filters\UnitFunctionFilter.cs" />
+    <Compile Include="Strategies\UnitFunctionFilterStrategy.cs" />
+    <Compile Include="Filters\UserPrivilegeFilter.cs" />
+    <Compile Include="Filters\UserRoleFIlter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\NHibernate\src\NHibernate\NHibernate.csproj">
+      <Project>{5909BFE7-93CF-4E5F-BE22-6293368AF01D}</Project>
+      <Name>NHibernate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Buisness.Components\Buisness.Components.csproj">
+      <Project>{F15324A1-7904-426F-8D38-EFB2ECADCAC8}</Project>
+      <Name>Buisness.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Buisness.Filters\Buisness.Filters.csproj">
+      <Project>{5CE43B8C-1F48-4FA1-BBBF-5F55DF3A71C2}</Project>
+      <Name>Buisness.Filters</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataAccessLogic.Infrastructure\DataAccessLogic.Infrastructure.csproj">
+      <Project>{FC020B62-876D-4DB6-9FB0-822D786508F8}</Project>
+      <Name>DataAccessLogic.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Filtering.Infrastructure\Filtering.Infrastructure.csproj">
+      <Project>{1CAD3840-7203-4025-B21C-4D9EE9240E54}</Project>
+      <Name>Filtering.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Halfblood.Common\Halfblood.Common.csproj">
+      <Project>{0D7C5F69-FF6D-474C-B892-DE5EF71959C0}</Project>
+      <Name>Halfblood.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ParusModel.Policy\ParusModel.Policy.csproj">
+      <Project>{D28E2870-27E8-45E5-832F-BB3DD86C3B1B}</Project>
+      <Name>ParusModel.Policy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ParusModelLite\ParusModelLite.csproj">
+      <Project>{81A7E2E3-7589-402F-A047-6D5A74E759F6}</Project>
+      <Name>ParusModelLite</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServerApplication.Infrastructure\NHibernate.Helper.csproj">
+      <Project>{2031A52B-9566-4499-AF5D-C15AA99C4AD0}</Project>
+      <Name>NHibernate.Helper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y “$(ProjectDir)Bin\$(ConfigurationName)\$(TargetFileName)” “D:\Repositories\HalfbloodApp\configurations\Work\$(TargetFileName)”</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

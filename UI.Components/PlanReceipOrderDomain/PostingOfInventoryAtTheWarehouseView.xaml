@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="UI.Components.PlanReceipOrderDomain.PostingOfInventoryAtTheWarehouseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:planReceiptOrderDomain="clr-namespace:UI.Infrastructure.ViewModels.PlanReceiptOrderDomain;assembly=UI.Infrastructure"
+             xmlns:xaml="clr-namespace:ReactiveUI.Xaml;assembly=ReactiveUI.Xaml"
+             d:DataContext="{d:DesignInstance planReceiptOrderDomain:IPostingOfInventoryAtTheWarehouseViewModel}"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <Grid>
+        <controls:ProgressRing x:Name="BusyControl" Canvas.ZIndex="1" />
+
+        <Grid x:Name="RootContentGrid" VerticalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="5*" />
+            </Grid.RowDefinitions>
+
+            <xaml:ViewModelViewHost x:Name="PlanReceiptOrderView"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalContentAlignment="Stretch"
+                                    VerticalContentAlignment="Stretch" />
+
+            <xaml:ViewModelViewHost x:Name="PlanCertificateView"
+                                    Grid.Row="1"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalContentAlignment="Stretch"
+                                    VerticalContentAlignment="Stretch" />
+
+            <GridSplitter Grid.Row="1"
+                          Height="4"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Top" />
+
+            <Expander Grid.RowSpan="2"
+                      Grid.Column="2"
+                      ExpandDirection="Right"
+
+                      Name="ExpanderFilter">
+                <Expander.HeaderTemplate>
+                    <DataTemplate>
+                        <Border Margin="0,80,-50,0" BorderThickness="0,0,0,3">
+                            <Border.RenderTransform>
+                                <TransformGroup>
+                                    <RotateTransform Angle="-90" />
+                                </TransformGroup>
+                            </Border.RenderTransform>
+                            <TextBlock FontSize="20"
+                                       RenderTransformOrigin="0.5,0.5"
+                                       Text=" ПОИСК " />
+                        </Border>
+                    </DataTemplate>
+                </Expander.HeaderTemplate>
+
+                <xaml:ViewModelViewHost x:Name="ProFilterView"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalContentAlignment="Stretch" />
+            </Expander>
+        </Grid>
+    </Grid>
+</UserControl>
