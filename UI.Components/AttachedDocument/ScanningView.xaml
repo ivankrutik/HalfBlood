@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="UI.Components.AttachedDocument.ScanningView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:attachedDocumentDomain="clr-namespace:UI.Infrastructure.ViewModels.AttachedDocumentDomain;assembly=UI.Infrastructure"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:Name="Root"
+             d:DataContext="{d:DesignInstance attachedDocumentDomain:IGetImageViewModel}"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <Grid>
+        <StackPanel HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Orientation="Horizontal">
+            <Button Content="сканировать" />
+            <Button x:Name="BtnScanParam"
+                    Command="{Binding Path=ScanningWithAdvancedSettingsCommand}"
+                    Content="сканировать с параметрами" />
+            <Button x:Name="BtnToFile"
+                    Click="OpenFileDialog"
+                    Command="{Binding Path=FromFileSystemCommand}"
+                    CommandParameter="{Binding Path=FileName,
+                                               ElementName=Root}"
+                    Content="из файла" />
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,363 @@
+﻿<UserControl x:Class="UI.Components.DepartmentOrderDomain.EditDepartmentOrderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:common="clr-namespace:UI.Components.Common"
+             xmlns:commonDomain="clr-namespace:Buisness.Entities.CommonDomain;assembly=Buisness.Entities"
+             xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+             xmlns:controls1="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:converters="clr-namespace:UI.Components.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:departmentOrderDomain="clr-namespace:UI.Infrastructure.ViewModels.DepartmentOrderDomain;assembly=UI.Infrastructure"
+             xmlns:departmentOrderDomain1="clr-namespace:UI.Entities.DepartmentOrderDomain;assembly=UI.Entities"
+             xmlns:infrastructure="clr-namespace:UI.Infrastructure;assembly=UI.Infrastructure"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DataContext="{d:DesignInstance departmentOrderDomain:IEditDepartmentOrderViewModel}"
+             d:DesignHeight="700"
+             d:DesignWidth="500"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <Style x:Key="Separator" TargetType="Border">
+            <Setter Property="Margin" Value="2" />
+        </Style>
+        <Style BasedOn="{StaticResource MetroTextBox}" TargetType="TextBox">
+            <Setter Property="Margin" Value="2,2,0,0" />
+        </Style>
+        <Style BasedOn="{StaticResource MetroTextBlock}" TargetType="TextBlock">
+            <Setter Property="Margin" Value="2,2,0,0" />
+        </Style>
+        <Style BasedOn="{StaticResource MetroCheckBox}" TargetType="CheckBox">
+            <Setter Property="Margin" Value="2,2,0,0" />
+        </Style>
+        <Style BasedOn="{StaticResource MetroDatePicker}" TargetType="DatePicker">
+            <Setter Property="Margin" Value="2,2,0,0" />
+        </Style>
+    </UserControl.Resources>
+
+    <GroupBox MinWidth="300"
+              MaxWidth="960"
+              VerticalAlignment="Center">
+        <GroupBox.Header>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="Numb" Visibility="{Binding Path=EditState, Converter={x:Static converters:IsEditableToVisibilityConverter.Instance}, ConverterParameter={x:Static infrastructure:EditState.Edit}}">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}Документ: {1}-{0} от {2}">
+                            <Binding Mode="OneWay" Path="EditableObject.Numb" />
+                            <Binding Mode="OneWay" Path="EditableObject.Pref" />
+                            <Binding Mode="OneWay" Path="EditableObject.CreationDate" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <Button x:Name="BtnApply"
+                        Grid.Column="1"
+                        HorizontalAlignment="Right"
+                        Command="{Binding Path=ApplyCommand}"
+                        Style="{DynamicResource SaveButtonStyle}" />
+            </Grid>
+        </GroupBox.Header>
+        <TabControl>
+            <TabItem Header="Заявка">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <ScrollViewer Grid.Row="1"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto">
+                        <Grid x:Name="Root">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <GroupBox Header="Доступные каталоги">
+                                <common:AcatalogView x:Name="AcatalogView" SelectedItem="{Binding Path=EditableObject.Catalog, Mode=TwoWay, ValidatesOnDataErrors=True}" />
+                            </GroupBox>
+                            <!--  РЕКВИЗИТЫ  -->
+                            <GroupBox Grid.Row="1" Header="Склады">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="*" />
+
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="Склад источник" />
+                                    <TextBox Grid.Column="2" IsReadOnly="True">
+                                        <TextBox.Text>
+                                            <Binding Mode="TwoWay"
+                                                     Path="EditableObject.WarehouseSource.AzsName"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     ValidatesOnDataErrors="True" />
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <Border Grid.Row="1"
+                                            Grid.ColumnSpan="3"
+                                            Style="{StaticResource Separator}" />
+                                    <TextBlock Grid.Row="2" Text="Склад получатель" />
+                                    <TextBox Grid.Row="2"
+                                             Grid.Column="2"
+                                             IsReadOnly="True">
+                                        <TextBox.Text>
+                                            <Binding Mode="TwoWay"
+                                                     Path="EditableObject.WarehouseReceiver.AzsName"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     ValidatesOnDataErrors="True" />
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox Grid.Row="2" Header="Материал">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Материал" />
+                                    <TextBox Grid.Column="2" IsReadOnly="True">
+                                        <TextBox.Text>
+                                            <Binding Mode="TwoWay"
+                                                     Path="EditableObject.Rn"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     ValidatesOnDataErrors="True" />
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox Grid.Row="3" Header="Количество">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="Создатель заявки" />
+                                    <TextBox Grid.Column="2" IsReadOnly="True">
+                                        <TextBox.Text>
+                                            <Binding Mode="TwoWay"
+                                                     Path="EditableObject.UserCreator"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     ValidatesOnDataErrors="True" />
+                                        </TextBox.Text>
+                                    </TextBox>
+
+                                    <Border Grid.Row="1"
+                                            Grid.ColumnSpan="3"
+                                            Style="{StaticResource Separator}" />
+
+                                    <TextBlock Grid.Row="2" Text="Кол-во запрошено" />
+                                    <TextBox Grid.Row="2"
+                                             Grid.Column="2"
+                                             controls1:TextboxHelper.ClearTextButton="True">
+                                        <TextBox.Text>
+                                            <Binding Mode="TwoWay"
+                                                     Path="EditableObject.RequestedQuantity"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     ValidatesOnDataErrors="True" />
+                                        </TextBox.Text>
+                                    </TextBox>
+
+                                    <Border Grid.Row="3"
+                                            Grid.ColumnSpan="3"
+                                            Style="{StaticResource Separator}" />
+
+                                    <TextBlock Grid.Row="4" Text="Товаровед" />
+                                    <Grid Grid.Row="4" Grid.Column="2">
+                                        <controls:AutoCompleteBox Name="AcbUserContractor"
+                                                                  SelectedItem="{Binding Path=EditableObject.Matching,
+                                                                                         Mode=TwoWay,
+                                                                                         UpdateSourceTrigger=PropertyChanged,
+                                                                                         ValidatesOnDataErrors=True,
+                                                                                         Converter={x:Static converters:MapperConverter.Instance}}"
+                                                                  controls1:TextboxHelper.ClearTextButton="True">
+                                            <controls:AutoCompleteBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Path=Contractor.OrganizationName}" d:DataContext="{d:DesignInstance commonDomain:GoodsManagerDto}" />
+                                                </DataTemplate>
+                                            </controls:AutoCompleteBox.ItemTemplate>
+                                        </controls:AutoCompleteBox>
+                                        <controls1:MetroProgressBar x:Name="BusyUser"
+                                                                    Width="{Binding ElementName=AcbUserContractor,
+                                                                                    Path=ActualWidth}"
+                                                                    Style="{DynamicResource MetroProgressBarStyle}" />
+                                    </Grid>
+                                    <Border Grid.Row="5"
+                                            Grid.ColumnSpan="3"
+                                            Style="{StaticResource Separator}" />
+
+                                    <TextBlock Grid.Row="6" Text="Кол-во завизировано" />
+                                    <TextBox Grid.Row="6"
+                                             Grid.Column="2"
+                                             controls1:TextboxHelper.ClearTextButton="True">
+                                        <TextBox.Text>
+                                            <Binding Mode="TwoWay"
+                                                     Path="EditableObject.RequestedQuantity"
+                                                     UpdateSourceTrigger="PropertyChanged"
+                                                     ValidatesOnDataErrors="True" />
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox Grid.Row="4" Header="Допуск">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="5" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <CheckBox Content="СПЕЦ" IsChecked="{Binding ElementName=Root, Path=ClaimDopusk.Spec, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                                    <CheckBox Grid.Column="2"
+                                              Content="ТНП"
+                                              IsChecked="{Binding ElementName=Root,
+                                                                  Path=ClaimDopusk.TNP,
+                                                                  Mode=TwoWay,
+                                                                  UpdateSourceTrigger=PropertyChanged}" />
+
+                                    <CheckBox Name="aescb"
+                                              Grid.Row="1"
+                                              Content="АЭС"
+                                              IsChecked="{Binding ElementName=Root,
+                                                                  Path=ClaimDopusk.AES,
+                                                                  Mode=TwoWay,
+                                                                  UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBox Grid.Row="1"
+                                             Grid.Column="2"
+                                             IsEnabled="{Binding ElementName=aescb,
+                                                                 Path=IsChecked}"
+                                             Text="{Binding ElementName=Root,
+                                                            Path=ClaimDopusk.AESText,
+                                                            Mode=TwoWay,
+                                                            UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Grid.Row="2" Text="Другое" />
+
+                                    <TextBox Grid.Row="2"
+                                             Grid.Column="2"
+                                             HorizontalAlignment="Stretch"
+                                             Text="{Binding ElementName=Root,
+                                                            Path=ClaimDopusk.Other,
+                                                            Mode=TwoWay,
+                                                            UpdateSourceTrigger=PropertyChanged}" />
+
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox Grid.Row="5" MaxHeight="200">
+                                <GroupBox.Header>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock HorizontalAlignment="Left" Text="Сертификат качества" />
+                                        <Button Grid.Column="1"
+                                                HorizontalAlignment="Right"
+                                                Command="{Binding Path=NavigateToFindCertificateCommand}"
+                                                Content="найти сертификат" />
+                                    </Grid>
+                                </GroupBox.Header>
+                                <DataGrid x:Name="CertificatesDataGrid"
+                                          AutoGenerateColumns="False"
+                                          CanUserAddRows="False"
+                                          d:DataContext="{d:DesignInstance departmentOrderDomain1:DepartmentOrderSpecification}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding Path=Quantity}" Header="Кол-во" />
+                                        <DataGridTextColumn Binding="{Binding Path=DepartmentOrder}"
+                                                            Header="Номер сертификата завода изготовителя"
+                                                            IsReadOnly="True" />
+                                        <DataGridTextColumn Binding="{Binding Path=DepartmentOrder}"
+                                                            Header="Материал"
+                                                            IsReadOnly="True" />
+                                        <DataGridTextColumn Binding="{Binding Path=DepartmentOrder}"
+                                                            Header="Серия(плавка/партия)"
+                                                            IsReadOnly="True" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </GroupBox>
+                            <GroupBox Grid.Row="6"
+                                      MaxHeight="200"
+                                      Header="Дополнительно">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <ListBox x:Name="CommentsListBox">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate DataType="departmentOrderDomain1:DepartmentOrderComment">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <TextBlock>
+                                                        <TextBlock.Text>
+                                                            <MultiBinding StringFormat="{}{0}({1}): ">
+                                                                <Binding Path="UserCreator" />
+                                                                <Binding Path="CreationDate" />
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                    <TextBlock Grid.Column="1" Text="{Binding Path=Comment}" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <TextBox Grid.Row="1"
+                                             controls1:TextboxHelper.ClearTextButton="True"
+                                             controls1:TextboxHelper.IsMonitoring="True"
+                                             controls1:TextboxHelper.SelectAllOnFocus="True"
+                                             controls1:TextboxHelper.Watermark="введите текст и нажмите Enter для отправки" />
+                                </Grid>
+                            </GroupBox>
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Дефицит">
+                <WebBrowser x:Name="Browser" />
+            </TabItem>
+            <TabItem Header="История выдачи">
+                <TextBlock Text="Хрен на нее!" />
+            </TabItem>
+        </TabControl>
+    </GroupBox>
+</UserControl>

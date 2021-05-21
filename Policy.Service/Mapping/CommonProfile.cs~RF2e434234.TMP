@@ -1,0 +1,62 @@
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CommonProfile.cs" company="VZ">
+//   maratoss && offan
+// </copyright>
+// <summary>
+//   Defines the CommonProfile type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+using AutoMapper;
+using DataAccessLogic.Infrastructure;
+using Halfblood.Common.Mappers;
+using ParusModel.Policy;
+using Policy.Entity;
+
+namespace Policy.Service.Mapping
+{
+    /// <summary>
+    /// The common profile.
+    /// </summary>
+    [AutoMapperProfile]
+    public class CommonProfile : Profile
+    {
+        /// <summary>
+        /// The configure.
+        /// </summary>
+        protected override void Configure()
+        {
+            CreateSectionOfSystem();
+            CreateUnitFunction();
+        }
+      
+    
+        private void CreateSectionOfSystem()
+        {
+            Mapper.CreateMap<SectionOfSystem, SectionOfSystemDto>()
+                .ForMember(x => x.Rn, o => o.MapFrom(x => x.Rn))
+                .ForMember(x => x.Unitcode, o => o.MapFrom(x => x.UnitCode))
+                .ForMember(x => x.Unitname, o => o.MapFrom(x => x.UnitName));
+            Mapper.CreateMap<SectionOfSystemDto, SectionOfSystem>()
+                .ForMember(x => x.Rn, o => o.MapFrom(x => x.Rn))
+                .ForMember(x => x.UnitCode, o => o.MapFrom(x => x.Unitcode))
+                .ForMember(x => x.UnitName, o => o.MapFrom(x => x.Unitname));
+        }
+       
+      
+        private static void CreateUnitFunction()
+        {
+            Mapper.CreateMap<UnitFunction, UnitFunctionDto>()
+                .ForMember(x => x.Rn, o => o.MapFrom(x => x.Rn))
+                .ForMember(x => x.Code, o => o.MapFrom(x => x.Code))
+                .ForMember(x => x.Name, o => o.MapFrom(x => x.Name))
+                .ForMember(x => x.Standard, o => o.MapFrom(x => x.Standard));
+            Mapper.CreateMap<UnitFunctionDto, UnitFunction>().IgnoreAllNonExisting()
+                .ForMember(x => x.Rn, o => o.MapFrom(x => x.Rn))
+                .ForMember(x => x.Code, o => o.MapFrom(x => x.Code))
+                .ForMember(x => x.Name, o => o.MapFrom(x => x.Name))
+                .ForMember(x => x.Standard, o => o.MapFrom(x => x.Standard));
+        }
+    }
+          
+}

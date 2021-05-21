@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping schema="ParusModel" assembly="Learning" namespace="Learning" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="Student" table="Students" schema="Parus">
+    <id name="Id" type="Int32" access="property">
+      <column name="Id" not-null="true" />
+      <generator class="identity">
+        <param name="sequence">AI$STUDENTS_ID_seq</param>
+      </generator>
+    </id>
+    <property name="Name" type="String">
+      <column name="Name" not-null="true" />
+    </property>
+    <many-to-one name="Group" class="Group">
+      <column name="Gropby_Id" not-null="true" />
+    </many-to-one>
+    <bag name="TermPapers" generic="true" cascade="all-delete-orphan" inverse="true">
+      <key>
+        <column name="Student_Id" />
+      </key>
+      <one-to-many class="TermPaper" />
+    </bag>
+   
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,25 @@
+﻿using Buisness.Entities.CommonDomain;
+using Buisness.Entities.NomenclatorDomain;
+namespace Buisness.Entities.CuttingOrderDomain
+{
+    using System.Collections.Generic;
+
+    public class SampleDto : IDto
+    {
+        public long Rn { get; set; }
+        public long? Count { get; set; }
+        public long? BatchSize { get; set; }
+        public long? GeometricsLength { get; set; }
+        public long? GeometricsWidth { get; set; }
+        public long? NormExpense { get; set; }
+        public long? Weight { get; set; }
+        public string Note { get; set; }
+        public UnitOfMeasureDto Measure { get; set; }
+        public AcatalogDto Acatalog { get; set; }
+        public NomenclatureNumberModificationDto NomModif { get; set; }
+        public UserDto Creator { get; set; }
+        public CuttingOrderSpecificationDto CuttingOrderSpecification { get; set; }
+        public IList<SampleSertificationDto> SampleSertification { get; set; }
+    }
+
+}

@@ -1,0 +1,188 @@
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="StatusPlanReceiptOrderViewModel.cs" company="VZ">
+//   maratoss && offan
+// </copyright>
+// <summary>
+//   Defines the StatusPlanReceiptOrderViewModel type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System.Reactive.Linq;
+
+namespace UI.ProcessComponents.PlanReceipOrderDomain.PersonalAccountDomain
+{
+    using System.Linq;
+    using UI.Entities.CommonDomain;
+    using System;
+    using System.ComponentModel.Composition;
+    using System.Windows.Input;
+    using Halfblood.Common;
+    using ReactiveUI;
+    using ReactiveUI.Routing;
+    using ReactiveUI.Xaml;
+    using ServiceContracts;
+    using ServiceContracts.Facades;
+    using UI.Entities.PlanReceiptOrderDomain;
+    using UI.Infrastructure;
+    using UI.Infrastructure.ViewModels.PlanReceiptOrderDomain;
+    using UI.ProcessComponents.EditViewModels;
+
+    /// <summary>
+    /// The status plan receipt order view model.
+    /// </summary>
+    [Export(typeof(IStatusPersonalAccountViewModel))]
+    [PartCreationPolicy(CreationPolicy.NonShared)]
+    public class StatusPersonalAccountViewModel : PolicyEditableViewModelBase<PlanReceiptOrderPersonalAccount>, IStatusPersonalAccountViewModel
+    {
+        private ReactiveCommand _closeStateCommand;
+        private ReactiveCommand _confirmStateCommand;
+        private ReactiveCommand _notConfirmStateCommand;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StatusPersonalAccountViewModel"/> class.
+        /// </summary>
+        /// <param name="screen">
+        /// The screen.
+        /// </param>
+        /// <param name="viewModelManager">
+        /// The view model manager.
+        /// </param>
+        /// <param name="unitOfWorkFactory">
+        /// The unit of work factory.
+        /// </param>
+        [ImportingConstructor]
+        public StatusPersonalAccountViewModel(IScreen screen,
+            IViewModelManager viewModelManager,
+            IUnitOfWorkFactory unitOfWorkFactory)
+            : base(screen, unitOfWorkFactory)
+        {
+        }
+
+        /// <summary>
+        /// Gets the url path segment.
+        /// </summary>
+        public string UrlPathSegment
+        {
+            get { return "/StatusPersonalAccountView"; }
+        }
+
+        /// <summary>
+        /// The on load acatalog.
+        /// </summary>
+        /// <param name="typeOfTheEntity">
+        /// The type of the entity.
+        /// </param>
+        protected override void OnLoadAcatalog(Type typeOfTheEntity)
+        {
+            GetAccess.LoadForEntity(typeof(PlanReceiptOrderPersonalAccount), TypeActionInSystem.NonStandardAction);
+            // this.WhenAny(x => x.GetAccess.Result, x => x.Value).Subscribe(x => CheckIsEnable());
+
+        }
+
+        /// <summary>
+        /// Gets the scanning command.
+        /// </summary>
+        public ICommand CloseStateCommand
+        {
+            get
+            {
+
+                this._closeStateCommand = ReactiveCommand.Create(_ => CheckIsEnable(ActionTheSystem.PcoSetStateClose), _ =>
+                    {
+                        using (var coordinatorOfServices = this.UnitOfWorkFactory.Create())
+                        {
+                            var service = coordinatorOfServices.Create<IPlanReceiptOrderService>();
+                            service.SetStatusPersonalAccount(EditableObject.Rn, PlanReceiptOrderPersonalAccountState.Close);
+                            coordinatorOfServices.Commit();
+                        }
+                    });
+
+
+                return this._closeStateCommand;
+            }
+        }
+
+
+
+        public ICommand ConfirmStateCommand
+        {
+            get
+            {
+
+                if (_confirmStateCommand == null)
+                {
+                    var observable =
+                        this.WhenAny(
+                            x => x.GetAccess.Result,
+                            x => x.IsBusy,
+                            (Access1, isBusy) =>
+                            new { PRO = Access1.Value, IsBusy = isBusy })
+                            .Select(x => 
+                                (from elem in GetAccess.Result 
+                                 from elem1 in elem.UserPrivileges 
+                                 from elem2 in elem1.UNITFUNCs 
+                                 select elem2)
+                                 .Any(elem2 => elem2.Code == ActionTheSystem.PcoSetStateClose) && !IsBusy)
+                            .StartWith(GetAccess.Result != null && !IsBusy);
+
+                    _confirmStateCommand = this.GetCommandStatusPlanCertificateCommand(observable);
+                }
+                return _confirmStateCommand;
+            }
+        }
+
+        private ReactiveCommand GetCommandStatusPlanCertificateCommand(IObservable<bool> canExecute = null)
+        {
+            var command = new ReactiveCommand(canExecute);
+            command.Subscribe(_ =>
+            {
+                {
+                    using (var coordinatorOfServices = this.UnitOfWorkFactory.Create())
+                    {
+                        var service = coordinatorOfServices.Create<IPlanReceiptOrderService>();
+                        service.SetStatusPersonalAccount(EditableObject.Rn, PlanReceiptOrderPersonalAccountState.Confirm);
+                        coordinatorOfServices.Commit();
+                    }
+                }
+            });
+
+            return command;
+
+        }
+
+        public ICommand NotConfirmStateCommand
+        {
+            get
+            {
+                this._notConfirmStateCommand = ReactiveCommand.Create(_ => true, _ =>
+                {
+                    using (var coordinatorOfServices = this.UnitOfWorkFactory.Create())
+                    {
+                        var service = coordinatorOfServices.Create<IPlanReceiptOrderService>();
+                        service.SetStatusPersonalAccount(EditableObject.Rn, PlanReceiptOrderPersonalAccountState.NotСonfirm);
+                        coordinatorOfServices.Commit();
+                    }
+                });
+                return this._notConfirmStateCommand;
+            }
+        }
+
+        /// <summary>
+        /// The apply action.
+        /// </summary>
+        /// <param name="editObject">
+        /// The edit object.
+        /// </param>
+        protected override void ApplyAction(PlanReceiptOrderPersonalAccount editObject)
+        {
+            //TODO Fix me
+        }
+
+        private bool CheckIsEnable(string pPcoSetStateClose)
+        {
+            //_canExecuteClouseCommand = (from elem in GetAccess.Result from elem1 in elem.UserPrivileges from elem2 in elem1.UNITFUNCs select elem2).Any(elem2 => elem2.Code == ActionTheSystem.PcoSetStateClose);
+            var d = (from elem in GetAccess.Result from elem1 in elem.UserPrivileges from elem2 in elem1.UNITFUNCs select elem2).Any(elem2 => elem2.Code == ActionTheSystem.PcoSetStateClose);
+            return d;
+        }
+    }
+}

@@ -1,0 +1,399 @@
+﻿<UserControl x:Class="UI.Components.TestSheetsDomain.EditableTestSheetView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:c="clr-namespace:UI.Components.Converters"
+             xmlns:dt="clr-namespace:UI.Components.TestSheetsDomain.DataTemplateSelector"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:ts="clr-namespace:Halfblood.Common;assembly=Halfblood.Common"
+             xmlns:ts1="clr-namespace:Buisness.Entities.TestSheetDomain;assembly=Buisness.Entities"
+             x:Name="Root"
+             mc:Ignorable="d" Width="1270" Height="950">
+    <UserControl.Resources>
+        <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="GetTestSheetStates">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="ts:TestSheetState" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="GetHeatTreatmentOperations">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="ts:HeatTreatmentOperations" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="GetCoolingAmbients">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="ts:HeatTreatmentCoolingAmbients" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="MinWidth" Value="50" />
+        </Style>
+        <FrameworkElement x:Key="ProxyElement" DataContext="{Binding ElementName=Root, Path=DataContext}" />
+        <ContextMenu x:Key="HeatTreatmentMenu">
+            <MenuItem Header="Создать" Command="{Binding InsertHeatTreatmentCommand}" />
+            <MenuItem Header="Дублировать" Command="{Binding CloneHeatTreatmentCommand}" />
+            <MenuItem Header="Удалить" Command="{Binding DeleteHeatTreatmentCommand}" />
+        </ContextMenu>
+
+        <ContextMenu x:Key="TestResultMenu">
+            <MenuItem Header="Создать" Command="{Binding InsertTestResultCommand}" />
+            <MenuItem Header="Дублировать" Command="{Binding CloneTestResultCommand}" />
+            <MenuItem Header="Удалить" Command="{Binding DeleteTestResultCommand}" />
+            <Separator />
+            <MenuItem Header="Таблица результатов" Command="{Binding TableResultsCommand}" />
+        </ContextMenu>
+        <ControlTemplate x:Key="TestResultsTemplate">
+            <DockPanel HorizontalAlignment="Stretch">
+                <ContentControl Visibility="Collapsed" Content="{StaticResource ProxyElement}" />
+                <TextBox d:DataContext="{d:DesignInstance ts1:TestResultDto}"
+                         Text="{Binding SampleResultSets[0].Title}" DockPanel.Dock="Top"
+                         HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" IsReadOnly="True">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SampleResultSets[0].Title}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+                <DataGrid d:DataContext="{d:DesignInstance ts1:TestResultDto}" x:Name="DgTestResults"
+                          CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False"
+                          CanUserReorderColumns="False" CanUserResizeRows="False"
+                          ItemsSource="{Binding SampleResultSets}"
+                          Loaded="DgTestResults_OnLoaded" SelectionChanged="DgTestResults_OnSelectionChanged"
+                          HorizontalAlignment="Stretch" IsReadOnly="True" AutoGenerateColumns="False"
+                          HeadersVisibility="None" SelectionMode="Single" GridLinesVisibility="All">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding HeaderRowTitle}" />
+                        <DataGridTextColumn Binding="{Binding Value1}" />
+                        <DataGridTextColumn Binding="{Binding Value2}" />
+                        <DataGridTextColumn Binding="{Binding Value3}" />
+                        <DataGridTextColumn Binding="{Binding Value4}" />
+                        <DataGridTextColumn Binding="{Binding Value5}" />
+                        <DataGridTextColumn Binding="{Binding Value6}" />
+                        <DataGridTextColumn Binding="{Binding Value7}" />
+                        <DataGridTextColumn Binding="{Binding Value8}" />
+                        <DataGridTextColumn Binding="{Binding Value9}" />
+                        <DataGridTextColumn Binding="{Binding Value10}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </ControlTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <controls:ProgressRing Canvas.ZIndex="1" IsActive="{Binding IsBusy, Mode=OneWay}" />
+        <GroupBox>
+            <GroupBox.Header>
+                <DockPanel>
+                    <Button Command="{Binding ApplyCommand}" Content="Сохранить" VerticalAlignment="Center"
+                            Style="{DynamicResource SaveButtonStyle}" DockPanel.Dock="Right" Width="100"
+                            Height="30" />
+                    <Grid>
+                        <Label Grid.Column="0" FontSize="16"
+                               Content="{Binding EditableObject.TestCode, Converter={x:Static c:TestKindConverter.Instance}, Mode=OneTime}" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Label FontSize="16" Content="Испытательный лист №" />
+                            <TextBox FontSize="16"
+                                     Text="{Binding EditableObject.Number, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+                            <Label FontSize="16" Content="от" />
+                            <DatePicker FontSize="16"
+                                        SelectedDate="{Binding EditableObject.CreationDate, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+                            <ComboBox ItemsSource="{Binding Source={StaticResource GetTestSheetStates}}"
+                                      SelectedItem="{Binding EditableObject.State}" MinWidth="90">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
+                                            Text="{Binding Converter={x:Static c:TestSheetStateConverter.Instance}}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+                </DockPanel>
+            </GroupBox.Header>
+            <DockPanel LastChildFill="True">
+                <Grid DockPanel.Dock="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Column="0" Grid.Row="0" Content="Акт отбора проб" />
+                    <Label Grid.Column="1" Grid.Row="0" Content="{Binding EditableObject.ActSelectionNumber}" />
+                    <Label Grid.Column="2" Grid.Row="0" Content="от" />
+                    <Label Grid.Column="3" Grid.Row="0" Content="{Binding EditableObject.ActSelectionDate, StringFormat={}{0:hh:mm, dd.MM.yyyy}}" />
+                    <Label Grid.Column="4" Grid.Row="0" Content="Материал" />
+                    <Label Grid.Column="5" Grid.Row="0" Content="{Binding EditableObject.Material}" />
+                    <Label Grid.Column="0" Grid.Row="1" Content="Сертификат" />
+                    <Label Grid.Column="1" Grid.Row="1" Content="{Binding EditableObject.Certificate}" Grid.ColumnSpan="5" />
+                </Grid>
+                <Grid Margin="0,5" DockPanel.Dock="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Margin="0" Grid.Column="1" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <ToggleButton Grid.Column="0" Grid.Row="0" Padding="3" Margin="5,0" VerticalAlignment="Top"
+                                      Command="{Binding HeatTreatmentVisibilityCommand}" Content="Режиы Т/О, рецептура" />
+                        <TextBox Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="0,0,5,0"
+                                 IsReadOnly="True" IsReadOnlyCaretVisible="False" FontSize="14"
+                                 Text="{Binding HeatTreatmentTitle, Mode=OneWay}" TextWrapping="Wrap" />
+                        <Label Grid.Column="0" Grid.Row="1" Content="Исполнитель" HorizontalAlignment="Right" />
+                        <Label Grid.Column="1" Grid.Row="1" Content="{Binding EditableObject.Heater.Firstname, Mode=OneWay}" />
+                        <Label Grid.Column="2" Grid.Row="1" Content="{Binding EditableObject.HeaterDate, Mode=OneWay}" />
+                    </Grid>
+                    <GroupBox x:Name="HeatTreatmentGroupBox" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
+                              Visibility="{Binding IsVisibleHeatTreatments, Converter={x:Static c:BoolToVisibilityConverter.Instance}}">
+                        <GroupBox.Header>
+                            <Grid Width="{Binding Width, ElementName=HeatTreatmentGroupBox}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Термообработка" VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="2" Text="Ф.К. №" VerticalAlignment="Center" />
+                                <TextBox Grid.Column="3"
+                                         Text="{Binding Path=EditableObject.FixingCardNumber, TargetNullValue={x:Static sys:String.Empty}}"
+                                         Width="60" VerticalAlignment="Center" Margin="10,0,15,0" />
+                                <TextBlock Grid.Column="4" Text="Количество записей: " VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="5" Text="{Binding HeatTreatmentsFilter.Result.Count}"
+                                           VerticalAlignment="Center" />
+                            </Grid>
+                        </GroupBox.Header>
+                        <DataGrid AutoGenerateColumns="False" SelectionMode="Single" CanUserSortColumns="False"
+                                  CanUserReorderColumns="False" CanUserResizeRows="False" CanUserAddRows="False"
+                                  CanUserDeleteRows="False" IsReadOnly="False"
+                                  ContextMenu="{StaticResource HeatTreatmentMenu}"
+                                  SelectedItem="{Binding SelectedHeatTreatment}"
+                                  ItemsSource="{Binding HeatTreatmentsFilter.Result}" GridLinesVisibility="All">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Number}" Header="№ п/п" IsReadOnly="True" />
+                                <DataGridTemplateColumn Header="Наименование операции">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock
+                                                Text="{Binding Path=Operation, Converter={x:Static c:HeatTreatmentOperationConverter.Instance}}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <ComboBox
+                                                ItemsSource="{Binding Source={StaticResource GetHeatTreatmentOperations}}"
+                                                SelectedItem="{Binding Path=Operation, UpdateSourceTrigger=LostFocus}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock
+                                                            Text="{Binding Converter={x:Static c:HeatTreatmentOperationConverter.Instance}}" />
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn
+                                    Binding="{Binding PutTemperature, UpdateSourceTrigger=LostFocus, TargetNullValue={x:Static sys:String.Empty}}"
+                                    Header="Т Посадки, °С" />
+                                <DataGridTextColumn
+                                    Binding="{Binding SetTemperature, UpdateSourceTrigger=LostFocus, TargetNullValue={x:Static sys:String.Empty}}"
+                                    Header="Т Заданная, °С" />
+                                <DataGridTextColumn
+                                    Binding="{Binding HeatingTime, UpdateSourceTrigger=LostFocus, TargetNullValue={x:Static sys:String.Empty}}"
+                                    Header="Воздействие, мин." />
+                                <DataGridTextColumn
+                                    Binding="{Binding HoldingTime, UpdateSourceTrigger=LostFocus, TargetNullValue={x:Static sys:String.Empty}}"
+                                    Header="Выдержка, мин." />
+                                <DataGridTemplateColumn Header="Среда охлаждения">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock
+                                                Text="{Binding Path=Ambience, Converter={x:Static c:HeatTreatmentCoolingConverter.Instance}}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <ComboBox
+                                                ItemsSource="{Binding Source={StaticResource GetCoolingAmbients}}"
+                                                SelectedItem="{Binding Path=Ambience, UpdateSourceTrigger=LostFocus}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock
+                                                            Text="{Binding Converter={x:Static c:HeatTreatmentCoolingConverter.Instance}}" />
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn
+                                    Binding="{Binding AmbientTemperature, UpdateSourceTrigger=LostFocus, TargetNullValue={x:Static sys:String.Empty}}"
+                                    Header="Т Среды, °С" />
+                                <DataGridTextColumn
+                                    Binding="{Binding Creator.Firstname, UpdateSourceTrigger=LostFocus}"
+                                    Header="Термист" IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding CreationDate, UpdateSourceTrigger=LostFocus, StringFormat={}{0:dd.MM.yyyy hh:mm}}"
+                                    Header="Дата" IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+                </Grid>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                    <Label Content="Правильность изготовления образцов подтверждаю" HorizontalAlignment="Right" />
+                    <Label Content="{Binding EditableObject.SampleMaker.Firstname}" />
+                    <Label Content="{Binding EditableObject.SampleMakerDate}" />
+                </StackPanel>
+                <Grid DockPanel.Dock="Bottom" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Column="0" Grid.Row="0" Content="Заключение о соответствии:" />
+                    <Label Grid.Column="0" Grid.Row="1" Content="Начальник лаборатории" />
+                    <Label Grid.Column="0" Grid.Row="2" Content="Представитель ОТК" />
+                    <Label Grid.Column="0" Grid.Row="3" Content="Представитель ВП" />
+
+                    <TextBox Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Text="{Binding EditableObject.Note, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+                    <Label Grid.Column="1" Grid.Row="1" Content="{Binding EditableObject.LabChief.Firstname}" />
+                    <Label Grid.Column="1" Grid.Row="2" Content="{Binding EditableObject.OtkEmployee.Firstname}" />
+                    <Label Grid.Column="1" Grid.Row="3" Content="{Binding EditableObject.VpEmployee.Firstname}" />
+                    <Label Grid.Column="2" Grid.Row="1" Content="{Binding EditableObject.LabChiefDate}" />
+                    <Label Grid.Column="2" Grid.Row="2" Content="{Binding EditableObject.OtkEmployeeDate}" />
+                    <Label Grid.Column="2" Grid.Row="3" Content="{Binding EditableObject.VpEmployeeDate}" />
+                </Grid>
+
+                <GroupBox x:Name="TestResultsGroupBox">
+                    <GroupBox.Header>
+                        <DockPanel Width="{Binding Width, ElementName=TestResultsGroupBox}">
+                            <TextBlock Text="{Binding TestResultsFilter.Result.Count}" DockPanel.Dock="Right" />
+                            <TextBlock Text="Количество записей: " DockPanel.Dock="Right" />
+                            <TextBlock Text="Результаты испытаний" />
+                        </DockPanel>
+                    </GroupBox.Header>
+
+                    <DataGrid IsReadOnly="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                              CanUserSortColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False"
+                              AutoGenerateColumns="False" SelectionMode="Single"
+                              ContextMenuOpening="FrameworkElement_OnContextMenuOpening"
+                              ContextMenu="{StaticResource TestResultMenu}"
+                              SelectedItem="{Binding SelectedTestResult}"
+                              ItemsSource="{Binding TestResultsFilter.Result}"
+                              GridLinesVisibility="All">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Number}" IsReadOnly="True" Header="№ п/п" />
+                            <DataGridTextColumn Binding="{Binding AnalysesRange, UpdateSourceTrigger=LostFocus}" Header="№ анализа" />
+                            <DataGridTextColumn Binding="{Binding IndicatorName, UpdateSourceTrigger=LostFocus}" Header="Наименование показателя" />
+                            <DataGridTextColumn Binding="{Binding Unit, UpdateSourceTrigger=LostFocus}" Header="Ед.изм." />
+                            <DataGridTextColumn Binding="{Binding Requirements, UpdateSourceTrigger=LostFocus}" Header="Требования НД" />
+                            <DataGridTemplateColumn Header="Результат">
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <Grid HorizontalAlignment="Stretch">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Column="0" Grid.Row="0" Text="Знач." />
+                                            <TextBlock Grid.Column="0" Grid.Row="1" Text="Прим." />
+                                            <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Value, UpdateSourceTrigger=LostFocus}" />
+                                            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Note, UpdateSourceTrigger=LostFocus}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                                <DataGridTemplateColumn.CellTemplateSelector>
+                                    <dt:TestSheetResultsPresenterTemplateSelector>
+                                        <dt:TestSheetResultsPresenterTemplateSelector.SingleValueTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Value}" />
+                                                    <TextBlock Text="{Binding Note}">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Path=Note}"
+                                                                                 Value="{x:Null}">
+                                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </dt:TestSheetResultsPresenterTemplateSelector.SingleValueTemplate>
+                                        <dt:TestSheetResultsPresenterTemplateSelector.TableValuesTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <ContentControl Template="{StaticResource TestResultsTemplate}" />
+                                                    <TextBlock Text="{Binding Note}">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Path=Note}"
+                                                                                 Value="{x:Null}">
+                                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </dt:TestSheetResultsPresenterTemplateSelector.TableValuesTemplate>
+                                    </dt:TestSheetResultsPresenterTemplateSelector>
+                                </DataGridTemplateColumn.CellTemplateSelector>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Binding="{Binding TestingMethod, UpdateSourceTrigger=LostFocus}" Header="Метод испытания" />
+                            <DataGridTextColumn Binding="{Binding Equipment, UpdateSourceTrigger=LostFocus}" Header="Оборудование" />
+                            <DataGridTextColumn Binding="{Binding Tester.Firstname, UpdateSourceTrigger=LostFocus}" Header="Лаборант" IsReadOnly="True" />
+                            <DataGridTextColumn Binding="{Binding TesterDate, UpdateSourceTrigger=LostFocus, StringFormat={}{0:dd.MM.yyyy, hh:mm}}" Header="Дата" IsReadOnly="True" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+            </DockPanel>
+        </GroupBox>
+    </Grid>
+
+</UserControl>

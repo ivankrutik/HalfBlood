@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="UI.Components.PlanReceipOrderDomain.PersonalAccount.StatusPersonalAccountView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:common="clr-namespace:Halfblood.Common;assembly=Halfblood.Common"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:planReceiptOrderDomain="clr-namespace:UI.Infrastructure.ViewModels.PlanReceiptOrderDomain;assembly=UI.Infrastructure"
+             x:Name="Root"
+             d:DataContext="{d:DesignInstance planReceiptOrderDomain:IStatusPersonalAccountViewModel}"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <GroupBox MaxWidth="960" Header="Изменение статуса лицевого счета">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <controls:ProgressRing x:Name="BusyControl"
+                                   Grid.RowSpan="3"
+                                   Canvas.ZIndex="1" />
+
+            <Button x:Name="SetCloseState"
+                    Click="ChangeStatusClick"
+                    Content="Закрыть (Сформировать ПО)"
+                    Tag="{x:Static common:PlanReceiptOrderPersonalAccountState.Close}" />
+            <Button x:Name="SetConfirmState"
+                    Grid.Row="1"
+                    Click="ChangeStatusClick"
+                    Content="Подтвердить"
+                    Tag="{x:Static common:PlanReceiptOrderPersonalAccountState.Confirm}" />
+            <Button x:Name="SetNotConfirmState"
+                    Grid.Row="2"
+                    Click="ChangeStatusClick"
+                    Content="Не потвержден"
+                    Tag="{x:Static common:PlanReceiptOrderPersonalAccountState.NotСonfirm}" />
+
+        </Grid>
+    </GroupBox>
+</UserControl>

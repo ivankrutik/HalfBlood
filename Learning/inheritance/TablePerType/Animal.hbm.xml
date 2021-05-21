@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping schema="Parus" assembly="Learning" namespace="Learning.inheritance.TablePerType" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="Animal" table="Animal">
+    <id name="ID" type="Int32">
+      <column name="ID" not-null="true" sql-type="INTEGER" />
+      <generator class="identity" />
+    </id>
+    <property name="FoodClassification" type="String">
+      <column name="FoodClassification" not-null="true" length="128" sql-type="VARCHAR" />
+    </property>
+    <joined-subclass name="Crocodile" table="Crocodile">
+      <key>
+        <column name="RN" not-null="true" sql-type="INTEGER" />
+      </key>
+      <property name="Length" type="Decimal">
+        <column name="Length" not-null="false" sql-type="NUMERIC" />
+      </property>
+    </joined-subclass>
+    <joined-subclass name="Dog" table="Dog">
+      <key>
+        <column name="ID" not-null="true" sql-type="INTEGER" />
+      </key>
+      <property name="Breed" type="String">
+        <column name="Breed" not-null="true" length="128" sql-type="VARCHAR" />
+      </property>
+    </joined-subclass>
+    <joined-subclass name="Horse" table="Horse">
+      <key>
+        <column name="ID" not-null="true" sql-type="INTEGER" />
+      </key>
+      <property name="Breed" type="String">
+        <column name="Breed" not-null="true" length="128" sql-type="VARCHAR" />
+      </property>
+      <property name="MaximumSpeed" type="Decimal">
+        <column name="MaximumSpeed" not-null="false" sql-type="NUMERIC" />
+      </property>
+    </joined-subclass>
+    <joined-subclass name="Snake" table="Snake">
+      <key>
+        <column name="ID" not-null="true" sql-type="INTEGER" />
+      </key>
+      <property name="IsVenomous" type="Boolean">
+        <column name="IsVenomous" not-null="false" sql-type="BOOLEAN" />
+      </property>
+      <property name="Length" type="Decimal">
+        <column name="Length" not-null="false" sql-type="NUMERIC" />
+      </property>
+    </joined-subclass>
+  </class>
+</hibernate-mapping>

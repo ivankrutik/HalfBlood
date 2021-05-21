@@ -1,0 +1,19 @@
+﻿using System.ComponentModel;
+using Filtering.Infrastructure;
+
+namespace Buisness.Filters
+{
+    using Halfblood.Common;
+
+    public  class UnitOfMeasureFilter : IUserFilter<long>
+    {
+        public long Rn { get; set; }
+        object IHasUid.Rn { get { return Rn; } }
+        public int Skip { get; set; }
+        public int Take { get; set; }
+        public  string Code { get; set; }
+        public  string Name { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
+}

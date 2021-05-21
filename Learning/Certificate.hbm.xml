@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping schema="ParusModel" assembly="Learning" namespace="Learning" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="Certificate" table="Certificates" schema="Parus" select-before-update="true">
+    <id name="Id" type="Int32">
+      <column name="Id" not-null="true" />
+      <generator class="identity">
+        <param name="sequence">AI$CERTIFICATES_ID_seq</param>
+      </generator>
+    </id>
+    <property name="Name" type="String">
+      <column name="Name" not-null="true" />
+    </property>
+    <one-to-one name="Group" class="Group" cascade="save-update" />
+  </class>
+</hibernate-mapping>

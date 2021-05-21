@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="UI.Components.CertificateQualityDomain.PermissionMaterialDomain.StatusPermissionMaterialDomain.StatusPermissionMaterialUserView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:common="clr-namespace:Halfblood.Common;assembly=Halfblood.Common"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:permissionMaterialDomain="clr-namespace:UI.Infrastructure.ViewModels.PermissionMaterialDomain;assembly=UI.Infrastructure"
+             d:DataContext="{d:DesignInstance permissionMaterialDomain:IStatusPermissionMaterialUserViewModel}"
+             mc:Ignorable="d" 
+             x:Name="Root">
+    <Grid>
+        <GroupBox MaxWidth="960" Header="Согласование продления разрешения на условный допуск материала">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <controls:ProgressRing x:Name="BusyControl"
+                                       Grid.RowSpan="3"
+                                       Canvas.ZIndex="1"/>
+                <Button x:Name="SetExpectingState"
+                        Grid.Row="0"
+                        Click="ChangeStatusClick"
+                        Content="В ожидании"
+                        Tag="{x:Static common:PermissionMaterialUserState.Expecting}" />
+                <Button x:Name="SetConfirmedState"
+                        Grid.Row="1"
+                        Click="ChangeStatusClick"
+                        Content="Согласовано"
+                        Tag="{x:Static common:PermissionMaterialUserState.Confirmed}" />
+                <Button x:Name="SetNotConfirmedState"
+                        Grid.Row="2"
+                        Click="ChangeStatusClick"
+                        Content="Не согласовано"
+                        Tag="{x:Static common:PermissionMaterialUserState.NotConfirmed}" />
+                <TextBlock Grid.Row="4" Text="Примечание"/>
+                <TextBox Name="tbNote" Grid.Row="5" Width="500" Height="100" Text="{Binding Path=Note}"/>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

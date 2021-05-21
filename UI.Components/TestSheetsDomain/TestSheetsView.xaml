@@ -1,0 +1,207 @@
+﻿<UserControl x:Class="UI.Components.TestSheetsDomain.TestSheetsView" x:Name="Root"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:converters="clr-namespace:UI.Components.Converters"
+             xmlns:testSheetDomain="clr-namespace:Halfblood.Common;assembly=Halfblood.Common"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" d:DesignHeight="1024" d:DesignWidth="1280">
+    <UserControl.Resources>
+        <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="GetTestKinds">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="testSheetDomain:TestKinds" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="3" />
+        </Style>
+        <ContextMenu x:Key="TestSheetMenu">
+            <MenuItem Header="Создать" ItemsSource="{Binding Source={StaticResource GetTestKinds}}">
+                <MenuItem.ItemContainerStyle>
+                    <Style TargetType="MenuItem">
+                        <Setter Property="Header"
+                                Value="{Binding Path=., Converter={x:Static converters:TestKindConverter.Instance}}" />
+                        <Setter Property="Command"
+                                Value="{Binding RelativeSource={RelativeSource AncestorType=MenuItem}, Path=DataContext.InsertTestSheetCommand}" />
+                        <Setter Property="CommandParameter" Value="{Binding}" />
+                    </Style>
+                </MenuItem.ItemContainerStyle>
+            </MenuItem>
+            <MenuItem Header="Редактировать" Command="{Binding UpdateTestSheetCommand}" />
+            <MenuItem Header="Удалить" Command="{Binding DeleteTestSheetCommand}" />
+        </ContextMenu>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <metro:ProgressRing Canvas.ZIndex="1" IsActive="{Binding IsBusy, Mode=OneWay}" Grid.ColumnSpan="3" />
+
+        <GroupBox Grid.Column="0" Grid.Row="0" x:Name="TestSheetGroupBox">
+            <GroupBox.Header>
+                <DockPanel Width="{Binding Width, ElementName=TestSheetGroupBox}">
+                    <TextBlock Text="{Binding TestSheetsFilter.Result.Count}" DockPanel.Dock="Right" />
+                    <TextBlock Text="Количество записей: " DockPanel.Dock="Right" />
+                    <TextBlock Text="Испытательные листы" />
+                </DockPanel>
+            </GroupBox.Header>
+            <DataGrid IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Single" x:Name="DgTestSheets"
+                      SelectedItem="{Binding SelectedTestSheetLiteDto}"
+                      ContextMenu="{StaticResource TestSheetMenu}" ItemsSource="{Binding TestSheetsFilter.Result}"
+                      GridLinesVisibility="All">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding ActSelectionNumber}" Header="Акт О.П" />
+                    <DataGridTextColumn Binding="{Binding ActSelectionDate, StringFormat={}{0:dd.MM.yyyy hh:mm}}"
+                                        Header="Создан" />
+                    <DataGridTemplateColumn Header="Сертификат, материал" SortMemberPath="State">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Certificate}" />
+                                    <TextBlock Text="{Binding Material}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Binding="{Binding TestCode, Converter={x:Static converters:TestKindConverter.Instance}}" Header="Вид анализа" />
+                    <DataGridTextColumn Binding="{Binding Number}" Header="И.Л" />
+                    <DataGridTextColumn Binding="{Binding CreationDate, StringFormat={}{0:dd.MM.yyyy hh:mm}}" Header="Создан" />
+                    <DataGridTextColumn Binding="{Binding Note}" Header="Заключение о соответствии" />
+                    <DataGridTemplateColumn Header="Нач.лаборатории">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding LabChief.Firstname}" />
+                                    <TextBlock Text="{Binding LabChiefDate, StringFormat={}{0:dd.MM.yyyy hh:mm}}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Представитель ОТК">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding OtkEmployee.Firstname}" />
+                                    <TextBlock Text="{Binding OtkEmployeeDate, StringFormat={}{0:dd.MM.yyyy hh:mm}}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Представитель ВП">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding VpEmployee.Firstname}" />
+                                    <TextBlock Text="{Binding VpEmployeeDate, StringFormat={}{0:dd.MM.yyyy hh:mm}}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Binding="{Binding State, Converter={x:Static converters:TestSheetStateConverter.Instance}}" Header="Состояние" />
+                    <DataGridTextColumn Binding="{Binding StateDate, StringFormat={}{0:dd.MM.yyyy hh:mm}}" Header="Установлено" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+
+        <Expander Grid.Row="0" Grid.Column="1" ExpandDirection="Right" IsExpanded="True">
+            <Expander.HeaderTemplate>
+                <DataTemplate>
+                    <Border Margin="0,80,-50,0" BorderThickness="0,0,0,3">
+                        <Border.RenderTransform>
+                            <TransformGroup>
+                                <RotateTransform Angle="-90" />
+                            </TransformGroup>
+                        </Border.RenderTransform>
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="{DynamicResource AccentColor}" />
+                        </Border.BorderBrush>
+                        <TextBlock FontSize="20"
+                                   RenderTransformOrigin="0.5,0.5"
+                                   Text=" ПОИСК ">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Foreground">
+                                                <Setter.Value>
+                                                    <SolidColorBrush Color="{DynamicResource AccentColor}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Border>
+                </DataTemplate>
+            </Expander.HeaderTemplate>
+
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type DatePicker}">
+                        <Setter Property="Margin" Value="2" />
+                        <Setter Property="Width" Value="120" />
+                    </Style>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Setter Property="Margin" Value="2" />
+                    </Style>
+                    <Style x:Key="HeaderStyle" TargetType="GroupBox">
+                        <Setter Property="FontSize" Value="12" />
+                        <Setter Property="Foreground" Value="Gray" />
+                    </Style>
+                </StackPanel.Resources>
+
+                <Button Command="{Binding TestSheetsFilter.InvokeCommand}" ToolTip="Начать поиск">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Rectangle Width="20" Height="20">
+                                <Rectangle.Fill>
+                                    <SolidColorBrush Color="{DynamicResource BlackColor}" />
+                                </Rectangle.Fill>
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_magnify}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Text="ПОИСК" Margin="10,0,0,0" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
+                <!--  TestSheets  -->
+                <GroupBox Header="Испытательный лист" Style="{StaticResource HeaderStyle}">
+                    <GroupBox Header="Дата создания" Style="{StaticResource HeaderStyle}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <DatePicker Grid.Column="0"
+                                        SelectedDate="{Binding TestSheetsFilter.TestSheetCreationDate.From, Mode=TwoWay}" />
+                            <DatePicker Grid.Column="1"
+                                        SelectedDate="{Binding TestSheetsFilter.CreationDateTestSheetCreationDate.To, Mode=TwoWay}" />
+                        </Grid>
+                    </GroupBox>
+                </GroupBox>
+
+                <GroupBox Header="Акт отбора проб" Style="{StaticResource HeaderStyle}">
+                    <GroupBox Header="Дата создания" Style="{StaticResource HeaderStyle}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <DatePicker Grid.Column="0"
+                                        SelectedDate="{Binding TestSheetsFilter.ActSelectionCreationDate.From, Mode=TwoWay}" />
+                            <DatePicker Grid.Column="1"
+                                        SelectedDate="{Binding TestSheetsFilter.ActSelectionCreationDate.To, Mode=TwoWay}" />
+                        </Grid>
+                    </GroupBox>
+                </GroupBox>
+            </StackPanel>
+        </Expander>
+    </Grid>
+</UserControl>

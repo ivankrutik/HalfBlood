@@ -1,0 +1,73 @@
+﻿<controls:MetroWindow x:Class="Halfblood.Shell.StartWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:behaviours="http://metro.mahapps.com/winfx/xaml/shared"
+                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      xmlns:xaml="clr-namespace:ReactiveUI.Xaml;assembly=ReactiveUI.Xaml"
+                      x:Name="Root"
+                      Title="Посертификационный учет материала - 1.0.2.6"
+                      Width="800"
+                      Height="600"
+                      BorderThickness="1"
+                      Language="ru-RU"
+                      ShowIconOnTitleBar="true"
+                      ShowTitleBar="True"
+                      WindowStartupLocation="CenterScreen"
+                      WindowState="Maximized">
+
+    <i:Interaction.Behaviors>
+        <behaviours:BorderlessWindowBehavior AllowsTransparency="False" ResizeWithGrip="True" />
+    </i:Interaction.Behaviors>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <controls:MetroWindow.WindowCommands>
+        <controls:WindowCommands>
+            <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+                <xaml:RoutedViewHost HorizontalAlignment="Stretch"
+                                     VerticalAlignment="Stretch"
+                                     HorizontalContentAlignment="Stretch"
+                                     VerticalContentAlignment="Stretch"
+                                     Router="{Binding Path=TitleBarHostScreen.Router,
+                                                      ElementName=Root}"
+                                     Transition="Fade" />
+            </StackPanel>
+        </controls:WindowCommands>
+    </controls:MetroWindow.WindowCommands>
+
+    <Grid>
+
+        <ContentControl>
+            <Rectangle>
+                <Rectangle.Fill>
+                    <ImageBrush AlignmentX="Right"
+                                AlignmentY="Bottom"
+                                ImageSource="/Assets/wall.jpg"
+                                Opacity=".1"
+                                Stretch="None" />
+                </Rectangle.Fill>
+            </Rectangle>
+        </ContentControl>
+
+        <xaml:RoutedViewHost HorizontalAlignment="Stretch"
+                             VerticalAlignment="Stretch"
+                             HorizontalContentAlignment="Stretch"
+                             VerticalContentAlignment="Stretch"
+                             Router="{Binding Path=OwnerHostScreen.Router,
+                                              ElementName=Root}"
+                             Transition="Fade" />
+    </Grid>
+</controls:MetroWindow>

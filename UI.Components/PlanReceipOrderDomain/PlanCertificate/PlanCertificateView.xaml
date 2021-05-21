@@ -1,0 +1,224 @@
+﻿<UserControl x:Class="UI.Components.PlanReceipOrderDomain.PlanCertificate.PlanCertificateView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:converters="clr-namespace:UI.Components.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:planReceiptOrderDomain="clr-namespace:UI.Infrastructure.ViewModels.PlanReceiptOrderDomain;assembly=UI.Infrastructure"
+             xmlns:planReceiptOrderDomain1="clr-namespace:ParusModelLite.PlanReceiptOrderDomain;assembly=ParusModelLite"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             x:Name="Root"
+             d:DataContext="{d:DesignInstance planReceiptOrderDomain:IPlanCertificateViewModel}"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ContextMenu x:Key="DataGridRowMenu">
+            <MenuItem x:Name="InsertRowMenuItem" Header="Добавить" />
+            <MenuItem x:Name="EditRowMenuItem" Header="Редактировать" />
+            <MenuItem x:Name="CopyRowMenuItem" Header="Размножить" />
+            <MenuItem x:Name="RemoveRowMenuItem" Header="Удалить" />
+            <MenuItem x:Name="ChangeStatusRowMenuItem" Header="Статус" />
+        </ContextMenu>
+
+        <ContextMenu x:Key="DataGridMenu">
+            <MenuItem x:Name="InsertMenuItem" Header="Добавить" />
+        </ContextMenu>
+
+        <ContextMenu x:Key="SubDgMenu">
+            <MenuItem x:Name="PersonalAccountInsertMenuItem" Header="Добавить" />
+        </ContextMenu>
+
+        <ContextMenu x:Key="SubDgRowMenu">
+            <MenuItem x:Name="PersonalAccountInsertRowMenuItem" Header="Добавить" />
+            <MenuItem x:Name="PersonalAccountRemoveRowMenuItem" Header="Удалить" />
+            <MenuItem x:Name="PersonalAccountEditRowMenuItem" Header="Редактировать" />
+            <MenuItem x:Name="PersonalAccountStatusRowMenuItem" Header="Статус" />
+        </ContextMenu>
+
+    </UserControl.Resources>
+    <GroupBox>
+        <GroupBox.Header>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Сертификаты(парспорта) качества" />
+
+                <TextBlock Grid.Column="1" Text="Количество выбранных записей: " />
+                <TextBlock x:Name="TxbSelectedRowsCount" Grid.Column="2" />
+                <Border Grid.Column="3" />
+                <TextBlock Grid.Column="4" Text="Количество записей: " />
+                <TextBlock x:Name="TxbRowsCount" Grid.Column="5" />
+            </Grid>
+        </GroupBox.Header>
+
+        <Grid x:Name="RootGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <controls:ProgressRing x:Name="BusyIndicator" Canvas.ZIndex="1" />
+
+            <DataGrid x:Name="DtGridPlanCertificate"
+                      AutoGenerateColumns="False"
+                      ContextMenu="{StaticResource DataGridMenu}"
+                      GridLinesVisibility="All"
+                      IsReadOnly="True"
+                      RowDetailsVisibilityMode="VisibleWhenSelected"
+                      SelectionMode="Extended"
+                      d:DataContext="{d:DesignInstance planReceiptOrderDomain1:PlanCertificateLiteDto}">
+                <DataGrid.RowStyle>
+                    <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                        <Setter Property="ContextMenu" Value="{StaticResource DataGridRowMenu}" />
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Path=CountByDocument, StringFormat=n}" Header="Кол-во по док." />
+                    <DataGridTextColumn Binding="{Binding Path=CountFact, StringFormat=n}" Header="Кол-о факт." />
+                    <DataGridTextColumn Binding="{Binding Path=Measure}" Header="Един.изм." />
+                    <DataGridTextColumn Binding="{Binding Path=CreationDate}" Header="Дата создания" />
+                    <DataGridTextColumn Binding="{Binding Path=Currency}" Header="Валюта" />
+                    <DataGridTextColumn Binding="{Binding Path=Note}" Header="Примечание" />
+                    <DataGridTextColumn Binding="{Binding Path=Price, StringFormat=n}" Header="Цена" />
+                    <DataGridTextColumn Header="Состояние">
+                        <DataGridTextColumn.Binding>
+                            <Binding Converter="{x:Static converters:PlanCertificateStateConverter.Instance}"
+                                     Mode="OneWay"
+                                     Path="State" />
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Path=StateDate}" Header="Дата смены сост." />
+                    <DataGridTextColumn Binding="{Binding Path=Store}" Header="Склад" />
+                    <DataGridTextColumn Binding="{Binding Path=Creator}" Header="Создатель" />
+                    <DataGridTextColumn Binding="{Binding Path=MemoModifNomen}" Header="Модификация номеклатуры" />
+                    <DataGridTextColumn Binding="{Binding Path=Marka}" Header="Марка" />
+                    <DataGridTextColumn Binding="{Binding Path=Cast}" Header="Плавка" />
+                    <DataGridTextColumn Binding="{Binding Path=FullRepresentation}"
+                                        Header="Полное обозначение по ГОСТу"
+                                        IsReadOnly="True" />
+                    <DataGridTextColumn Binding="{Binding Path=GostCast}" Header="ГОСТ на марку" />
+                    <DataGridTextColumn Binding="{Binding Path=GostMix}" Header="ГОСТ на сортамент" />
+                    <DataGridTextColumn Binding="{Binding Path=MakingDate, StringFormat='dd.mm.yyyy'}" Header="Дата изготовления ТМЦ" />
+                    <DataGridTextColumn Binding="{Binding Path=Numb}" Header="Номер" />
+                    <DataGridTextColumn Binding="{Binding Path=Pref}" Header="Префикс" />
+                    <DataGridTextColumn Binding="{Binding Path=NomerCertificata}" Header="Заводской номер сертификата" />
+                    <DataGridTextColumn Binding="{Binding Path=Mix}" Header="Сортамент" />
+                    <DataGridTextColumn Binding="{Binding Path=StorageDate, StringFormat='dd.mm.yyyy'}" Header="Гарантийный срок хранения" />
+                    <DataGridTextColumn Binding="{Binding Path=DeliveryCondition}" Header="Состояние поставки" />
+                    <DataGridTextColumn Binding="{Binding Path=ModeThermoTreatment}" Header="Режим термо обработки" />
+                    <DataGridTextColumn Binding="{Binding Path=Sizes}" Header="Размер" />
+                    <DataGridTextColumn Binding="{Binding Path=CreatorFactory}" Header="Завод изг." />
+                </DataGrid.Columns>
+
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate>
+
+                        <DataTemplate.Resources>
+                            <xctk:InverseBoolConverter x:Key="InverseBoolConverter" />
+                        </DataTemplate.Resources>
+
+                        <Grid IsEnabled="{Binding ElementName=Root, Path=ViewModel.PersonalAccountFilterViewModel.IsBusy, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}">
+                            <Grid.Background>
+                                <SolidColorBrush Color="{DynamicResource WhiteColor}" />
+                            </Grid.Background>
+                            <Grid.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="BorderThickness" Value="2" />
+                                    <Setter Property="BorderBrush">
+                                        <Setter.Value>
+                                            <SolidColorBrush Color="{DynamicResource AccentColor}" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Grid.Resources>
+
+                            <Border Width="2"
+                                    Height="20"
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top" />
+                            <Border Width="15"
+                                    Height="2"
+                                    Margin="5,20,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top" />
+                            <GroupBox Margin="20,10,0,0"
+                                      HorizontalAlignment="Left"
+                                      Header="Лицевые счета">
+                                <Grid>
+                                    <controls:ProgressRing Canvas.ZIndex="1" IsActive="{Binding ElementName=Root, Path=ViewModel.PersonalAccountFilterViewModel.IsBusy, Mode=OneWay}" />
+                                    <DataGrid x:Name="DataGridPersonalAccounts"
+                                              AutoGenerateColumns="False"
+                                              ContextMenu="{StaticResource SubDgMenu}"
+                                              GridLinesVisibility="All"
+                                              IsReadOnly="True"
+                                              ItemsSource="{Binding ElementName=Root,
+                                                                    Path=ViewModel.PersonalAccountFilterViewModel.Result}"
+                                              Loaded="DataGridPersonalAccounts_OnLoaded"
+                                              MouseDoubleClick="Control_OnMouseDoubleClick"
+                                              SelectedItem="{Binding ElementName=Root,
+                                                                     Path=ViewModel.SelectedPlanReceiptOrderPersonalAccount,
+                                                                     Mode=TwoWay}"
+                                              SelectionMode="Extended">
+                                        <DataGrid.RowStyle>
+                                            <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                                                <Setter Property="ContextMenu" Value="{StaticResource SubDgRowMenu}" />
+                                            </Style>
+                                        </DataGrid.RowStyle>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Binding="{Binding Path=CountByDocument}" Header="Кол-во по докум." />
+                                            <DataGridTextColumn Binding="{Binding Path=CountFact}" Header="Кол-во факт." />
+                                            <DataGridTextColumn Binding="{Binding Path=CreationDate}" Header="Дата создания" />
+                                            <DataGridTextColumn Binding="{Binding Path=Creator}" Header="Создатель" />
+                                            <DataGridTextColumn Binding="{Binding Path=Note}" Header="Примечание" />
+                                            <DataGridTextColumn Binding="{Binding Converter={x:Static converters:PlanReceiptOrderPersonalAccountStateConverter.Instance}, Mode=OneWay, Path=State}" Header="Состояние" />
+                                            <DataGridTextColumn Binding="{Binding Path=StateDate}" Header="Дата смены состояния" />
+                                            <DataGridTextColumn Binding="{Binding Path=AgentState}" Header="Установил статус" />
+                                            <DataGridTextColumn Binding="{Binding Path=PersonalAccount}" Header="Лицевой счет" />
+                                            <DataGridTextColumn Header="ПО">
+                                                <DataGridTextColumn.Binding>
+                                                    <MultiBinding StringFormat="{}{0}-{1}">
+                                                        <Binding Mode="OneWay" Path="InOrderPref" />
+                                                        <Binding Mode="OneWay" Path="InOrderNumb" />
+                                                    </MultiBinding>
+                                                </DataGridTextColumn.Binding>
+                                            </DataGridTextColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+                            </GroupBox>
+                        </Grid>
+                    </DataTemplate>
+                </DataGrid.RowDetailsTemplate>
+            </DataGrid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Сумма количества по документам для выбранных записей: " />
+                <TextBlock x:Name="TxbSumCountByDocumentSelectedRows" Grid.Column="1" />
+                <Border Grid.Column="2" />
+                <TextBlock Grid.Column="3" Text="Сумма количества фатически для выбранных записей: " />
+                <TextBlock x:Name="TxbSumCountFactSelectedRows" Grid.Column="4" />
+                <Border Grid.Column="5" />
+                <TextBlock Grid.Column="6" Text="Сумма цены с налогами для выбранных записей: " />
+                <TextBlock x:Name="TxbSumSelectedPriseCount" Grid.Column="7" />
+            </Grid>
+        </Grid>
+    </GroupBox>
+</UserControl>

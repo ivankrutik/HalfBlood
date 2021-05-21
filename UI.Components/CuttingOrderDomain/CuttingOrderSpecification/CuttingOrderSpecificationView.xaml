@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="UI.Components.CuttingOrderDomain.CuttingOrderSpecification.CuttingOrderSpecificationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:infrastructure="clr-namespace:UI.Infrastructure;assembly=UI.Infrastructure"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+
+    <Grid x:Name="RootGrid">
+        <Grid.Resources>
+            <ContextMenu x:Key="DataGridRowMenu">
+                <MenuItem Name="InsertRowMenuItem"
+                          CommandParameter="{x:Static infrastructure:EditState.Insert}"
+                          Header="Добавить" />
+                <MenuItem Name="EditRowMenuItem"
+                          CommandParameter="{x:Static infrastructure:EditState.Edit}"
+                          Header="Редактировать" />
+                <MenuItem Name="StatusRowMenuItem" Header="Статус" />
+            </ContextMenu>
+            <ContextMenu x:Key="DataGridMenu">
+                <MenuItem Name="InsertMenuItem"
+                          CommandParameter="{x:Static infrastructure:EditState.Insert}"
+                          Header="Добавить" />
+            </ContextMenu>
+        </Grid.Resources>
+
+        <controls:ProgressRing x:Name="BusyIndicator" Canvas.ZIndex="1" />
+
+        <DataGrid x:Name="DtGridCuttingOrderSpecifications"
+                  AutoGenerateColumns="False"
+                  ContextMenu="{StaticResource DataGridMenu}"
+                  IsReadOnly="True"
+                  SelectionMode="Single">
+            <DataGrid.RowStyle>
+                <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                    <Setter Property="ContextMenu" Value="{StaticResource DataGridRowMenu}" />
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=CreationDate}" Header="Дата добавления позиции" />
+                <DataGridTextColumn Binding="{Binding Path=AssumeDate}" Header="Дата допуска позиции" />
+                <DataGridTextColumn Binding="{Binding Path=NomModif}" Header="Модификация ДСЕ" />
+                <DataGridTextColumn Binding="{Binding Path=Inspector}" Header="Контролер допустивший позицию в наряд" />
+                <DataGridTextColumn Binding="{Binding Path=Department}" Header="Подразделение получатель" />
+                <DataGridTextColumn Binding="{Binding Path=PersonalAccount.Numb}" Header="Лицевой счет" />
+                <DataGridTextColumn Binding="{Binding Path=NormExpense}" Header="Норма расхода на заготовку" />
+                <DataGridTextColumn Binding="{Binding Path=CountPartWithBlank}" Header="Количество деталей из заготовки" />
+                <DataGridTextColumn Binding="{Binding Path=MeasureWeight.MEASNAME}" Header="Единица измерения(вес)" />
+                <DataGridTextColumn Binding="{Binding Path=MeasureNorm.MEASNAME}" Header="Единица измерения(Норма расхода на заготовку)" />
+                <DataGridTextColumn Binding="{Binding Path=PartBlankWeight}" Header="Вес" />
+                <DataGridTextColumn Binding="{Binding Path=PartBlankLenght}" Header="Длина" />
+                <DataGridTextColumn Binding="{Binding Path=PartBlankWidth}" Header="Ширина" />
+                <DataGridTextColumn Binding="{Binding Path=MaxDeflectionLenght}" Header="Максимальное отклонение длины" />
+                <DataGridTextColumn Binding="{Binding Path=MinDeflectionLenght}" Header="Минимальное отклонение длины" />
+                <DataGridTextColumn Binding="{Binding Path=DemandContract}" Header="Договор" />
+                <DataGridTextColumn Binding="{Binding Path=DemandGoods}" Header="Товар" />
+                <DataGridTextColumn Binding="{Binding Path=DemandPlanMonth}" Header="План" />
+                <DataGridTextColumn Binding="{Binding Path=State}" Header="Состояние" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

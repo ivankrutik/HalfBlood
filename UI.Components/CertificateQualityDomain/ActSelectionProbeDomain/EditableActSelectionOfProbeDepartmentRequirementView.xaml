@@ -1,0 +1,106 @@
+﻿<UserControl x:Class="UI.Components.CertificateQualityDomain.ActSelectionProbeDomain.EditableActSelectionOfProbeDepartmentRequirementView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:actSelectionOfProbeDomain1="clr-namespace:UI.Infrastructure.ViewModels.ActSelectionOfProbeDomain;assembly=UI.Infrastructure"
+
+             d:DataContext="{d:DesignInstance actSelectionOfProbeDomain1:IEditableActSelectionOfProbeDepartmentRequirementViewModel}"
+             VerticalAlignment="Center"
+             HorizontalContentAlignment="Stretch"
+             VerticalContentAlignment="Stretch"
+             d:DesignHeight="400"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+
+
+    <UserControl.Resources>
+        <Style x:Key="Separator" TargetType="Border">
+            <Setter Property="Margin" Value="2" />
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto">
+        <GroupBox Width="960"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch">
+            <GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Name="Title"
+                               Margin="20,0"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Center" />
+                    <StackPanel Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal">
+                        <Button x:Name="BtnApply" Style="{DynamicResource SaveButtonStyle}" />
+                        <Separator />
+                    </StackPanel>
+                </Grid>
+            </GroupBox.Header>
+
+            <Grid Margin="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <controls:ProgressRing x:Name="ProgressRing"
+                                    Grid.RowSpan="2"
+                                    Canvas.ZIndex="1" />
+
+                <Grid x:Name="Root"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+            
+                 
+
+                    <GroupBox Grid.Row="0"
+                              VerticalAlignment="Stretch"
+                              VerticalContentAlignment="Stretch"
+                              Header="Режим изготовления">
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock>Примечание</TextBlock>
+                            <TextBox x:Name="Requirement"
+                                     Grid.Column="2"
+                                     HorizontalAlignment="Stretch"
+                                     VerticalAlignment="Stretch"
+                                     HorizontalContentAlignment="Stretch"
+                                     VerticalContentAlignment="Stretch"
+                                     AcceptsReturn="True"
+                                     TextWrapping="Wrap"
+                                     VerticalScrollBarVisibility="Auto">
+                                <TextBox.Text>
+                                    <Binding Mode="TwoWay"
+                                             Path="EditableObject.Requirement"
+                                             UpdateSourceTrigger="PropertyChanged"
+                                             ValidatesOnDataErrors="True" />
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </Grid>
+        </GroupBox>
+    </ScrollViewer>
+</UserControl>

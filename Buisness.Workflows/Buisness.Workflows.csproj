@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{31756807-8DF5-41C1-B825-F3095501C010}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Buisness.Workflows</RootNamespace>
+    <AssemblyName>Buisness.Workflows</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+    <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>True</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>True</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsMissingPublicRequiresAsWarnings>True</CodeContractsMissingPublicRequiresAsWarnings>
+    <CodeContractsInferRequires>True</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsSQLServerOption />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
+    <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
+    <CodeContractsRuntimeCheckingLevel>None</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;RELEASE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Fake|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Fake\</OutputPath>
+    <DefineConstants>FAKE;CONTRACTS_FULL</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>True</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>True</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsMissingPublicRequiresAsWarnings>True</CodeContractsMissingPublicRequiresAsWarnings>
+    <CodeContractsInferRequires>True</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsSQLServerOption />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
+    <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ExceptionHandlers\OracleExceptionHandler.cs" />
+    <Compile Include="Helper\DateTimeHelpers.cs" />
+    <Compile Include="Helper\Helper.cs" />
+    <Compile Include="IServiceFactory.cs" />
+    <Compile Include="Managers\CertificateQualityDomain\PermissionMaterialDomain\IPermissionMaterialUserState.cs" />
+    <Compile Include="Managers\CertificateQualityDomain\PermissionMaterialDomain\PermissionMaterialUserSetStateManager.cs" />
+    <Compile Include="Managers\ExpenditureInvoiceDomain\ExpenditureInvoiceManager.cs" />
+    <Compile Include="Managers\ISetStateEntityManager.cs" />
+    <Compile Include="Managers\CreditSlipDomain\CreditSlipManager.cs" />
+    <Compile Include="Managers\PlanReceiptOrderDomain\IPlanReceiptOrderState.cs" />
+    <Compile Include="Managers\PlanReceiptOrderDomain\PersonalAccountDomain\IPlanReceiptOrderPersonalAccountState.cs" />
+    <Compile Include="Managers\PlanReceiptOrderDomain\PersonalAccountDomain\PlanReceiptOrderPersonalAccountSetStateManager.cs" />
+    <Compile Include="Managers\PlanReceiptOrderDomain\PlanCertificateDomain\IPlanCertificateState.cs" />
+    <Compile Include="Managers\PlanReceiptOrderDomain\PlanCertificateDomain\PlanCertificateSetStateManager.cs" />
+    <Compile Include="Managers\PlanReceiptOrderDomain\PlanReceiptOrderSetStateManager.cs" />
+    <Compile Include="Managers\SetStateEntityManagerFactory.cs" />
+    <Compile Include="Mapping\BusinessRelation.cs" />
+    <Compile Include="Mapping\CertificateQualityDomain\ActSelectionOfProbeDomain\ActSelectionOfProbeProfile.cs" />
+    <Compile Include="Mapping\CertificateQualityDomain\WarehouseQualityCertificateDomain\WarehouseQualityCertificateProfile.cs" />
+    <Compile Include="Mapping\CuttingOrderProfile.cs" />
+    <Compile Include="Mapping\DepartmentOrderProfile.cs" />
+    <Compile Include="ConfigureWorkflow.cs" />
+    <Compile Include="Mapping\PermissionMaterialProfile.cs" />
+    <Compile Include="Mapping\ExpenditureInvoiceProfile.cs" />
+    <Compile Include="Mapping\PolicyProfile.cs" />
+    <Compile Include="Mapping\TestSheetDomain\TestSheetsProfile.cs" />
+    <Compile Include="ServiceFactory.cs" />
+    <Compile Include="ServiceLocator.cs" />
+    <Compile Include="Services\AttachedDocumentService.cs" />
+    <Compile Include="Services\CertificateQualityDomain\ActInputControlService.cs" />
+    <Compile Include="Services\CertificateQualityDomain\ActSelectionOfProbeService.cs" />
+    <Compile Include="Services\CertificateQualityDomain\CertificateQualityService.cs" />
+    <Compile Include="Services\CertificateQualityDomain\ManufacturersCertificateService.cs" />
+    <Compile Include="Services\CommonService.cs" />
+    <Compile Include="Services\ContractService.cs" />
+    <Compile Include="Services\CuttingOrderService.cs" />
+    <Compile Include="Services\DepartmentOrderService.cs" />
+    <Compile Include="Services\FilteringService.cs" />
+    <Compile Include="Services\NomenclatureService.cs" />
+    <Compile Include="Services\CertificateQualityDomain\PermissionMaterialService.cs" />
+    <Compile Include="Services\PlanReceiptOrderService.cs" />
+    <Compile Include="Services\SettingsService.cs" />
+    <Compile Include="Services\TestSheetDomain\TestSheetsService.cs" />
+    <Compile Include="UnitOfWorkFactory.cs" />
+    <Compile Include="Mapping\AttachedDocumentProfile.cs" />
+    <Compile Include="Mapping\CertificateQualityDomain\CertificateQualityProfile.cs" />
+    <Compile Include="Mapping\CertificateQualityDomain\ManufacturersCertificateDomain\ActInputControlProfile.cs" />
+    <Compile Include="Mapping\CommonProfile.cs" />
+    <Compile Include="Mapping\ContractProfile.cs" />
+    <Compile Include="Mapping\CertificateQualityDomain\ManufacturersCertificateDomain\ManufacturersCertificateProfile.cs" />
+    <Compile Include="Mapping\NomenclatorProfile.cs" />
+    <Compile Include="Mapping\PlanReceiptOrderProfile.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfWork.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\AutoMapper\src\AutoMapper\AutoMapper.csproj">
+      <Project>{ddf551f9-b27d-4283-bfa0-e7068e05967d}</Project>
+      <Name>AutoMapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NHibernate\src\NHibernate\NHibernate.csproj">
+      <Project>{5909bfe7-93cf-4e5f-be22-6293368af01d}</Project>
+      <Name>NHibernate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ParusModel\ParusModel.csproj">
+      <Project>{AFDDD53A-89AD-4FB3-8011-C8C2131F0D51}</Project>
+      <Name>ParusModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Buisness.Components\Buisness.Components.csproj">
+      <Project>{F15324A1-7904-426F-8D38-EFB2ECADCAC8}</Project>
+      <Name>Buisness.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Buisness.Entities\Buisness.Entities.csproj">
+      <Project>{5A3E6003-5AA4-4BEE-AE41-DC228A389F78}</Project>
+      <Name>Buisness.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Buisness.Filters\Buisness.Filters.csproj">
+      <Project>{5CE43B8C-1F48-4FA1-BBBF-5F55DF3A71C2}</Project>
+      <Name>Buisness.Filters</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Buisness.Policy\Buisness.InternalEntity.csproj">
+      <Project>{45300226-7666-4373-b4ab-0723c12a164c}</Project>
+      <Name>Buisness.InternalEntity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataAccessLogic.Infrastructure\DataAccessLogic.Infrastructure.csproj">
+      <Project>{fc020b62-876d-4db6-9fb0-822d786508f8}</Project>
+      <Name>DataAccessLogic.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Filtering.Infrastructure\Filtering.Infrastructure.csproj">
+      <Project>{1CAD3840-7203-4025-B21C-4D9EE9240E54}</Project>
+      <Name>Filtering.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Halfblood.AlgorithmsOfCalculation\Halfblood.AlgorithmsOfCalculation.csproj">
+      <Project>{DEC5077C-EBB6-43A8-A89E-CCF8450B65F1}</Project>
+      <Name>Halfblood.AlgorithmsOfCalculation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Halfblood.Common\Halfblood.Common.csproj">
+      <Project>{0D7C5F69-FF6D-474C-B892-DE5EF71959C0}</Project>
+      <Name>Halfblood.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NhConnection.Infrasctructure\NhConnection.Infrasctructure.csproj">
+      <Project>{4BF56ECD-9D80-435F-A5A4-F8EF5B91FAFA}</Project>
+      <Name>NhConnection.Infrasctructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ParusModel.Policy\ParusModel.Policy.csproj">
+      <Project>{D28E2870-27E8-45E5-832F-BB3DD86C3B1B}</Project>
+      <Name>ParusModel.Policy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ParusModelLite\ParusModelLite.csproj">
+      <Project>{81a7e2e3-7589-402f-a047-6d5a74e759f6}</Project>
+      <Name>ParusModelLite</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Policy.Service\Buisness.InternalService.csproj">
+      <Project>{fd1ccb46-7576-478f-93e5-6a4147d204e1}</Project>
+      <Name>Buisness.InternalService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServerApplication.Infrastructure\NHibernate.Helper.csproj">
+      <Project>{2031A52B-9566-4499-AF5D-C15AA99C4AD0}</Project>
+      <Name>NHibernate.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceContracts\ServiceContracts.csproj">
+      <Project>{C9F07E7A-6DF1-4F43-999F-EC277484CAC1}</Project>
+      <Name>ServiceContracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UI.Entities\UI.Entities.csproj">
+      <Project>{5053FE4A-C57C-4A78-8883-587783098845}</Project>
+      <Name>UI.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y “$(ProjectDir)Bin\$(ConfigurationName)\$(TargetFileName)” “D:\Repositories\HalfbloodApp\configurations\Work\$(TargetFileName)”</PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

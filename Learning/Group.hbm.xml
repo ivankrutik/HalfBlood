@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping schema="Model" assembly="Learning" namespace="Learning" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="Group" table="Groups" schema="Parus" select-before-update="true">
+    <id name="Id" type="Int32">
+      <column name="Id" not-null="true" />
+      <generator class="identity">
+        <param name="sequence">AI_GROUPS_ID_seq</param>
+      </generator>
+    </id>
+    
+    <property name="Name" type="String">
+      <column name="Name" not-null="true" />
+    </property>
+    
+    <one-to-one name="Certificate" class="Certificate" cascade="none" />
+    
+    <bag name="Students" generic="true" cascade="all-delete-orphan" inverse="true">
+      <key>
+        <column name="Gropby_Id" not-null="true" />
+      </key>
+      <one-to-many class="Student" />
+    </bag>
+    
+  </class>
+</hibernate-mapping>

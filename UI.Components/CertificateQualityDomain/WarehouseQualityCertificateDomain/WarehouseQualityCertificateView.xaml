@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="UI.Components.CertificateQualityDomain.WarehouseQualityCertificateDomain.WarehouseQualityCertificateView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:converters="clr-namespace:UI.Components.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:warehouseQualityCertificateDomain="clr-namespace:UI.Infrastructure.ViewModels.WarehouseQualityCertificateDomain;assembly=UI.Infrastructure"
+             xmlns:warehouseQualityCertificateDomain1="clr-namespace:ParusModelLite.CertificateQualityDomain.WarehouseQualityCertificateDomain;assembly=ParusModelLite"
+             d:DataContext="{d:DesignInstance warehouseQualityCertificateDomain:IWarehouseQualityCertificateViewModel}"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <Grid>
+        <controls:ProgressRing x:Name="BusyControl"
+                               Grid.RowSpan="2"
+                               Grid.ColumnSpan="3"
+                               Canvas.ZIndex="1" />
+
+        <GroupBox Header="Сертификаты складского хозяйства">
+            <Grid x:Name="RootGrid">
+                <Grid.Resources>
+                    <ContextMenu x:Key="DataGridRowMenu">
+                        <MenuItem Name="InsertRowMenuItem" Header="Добавить" />
+                        <MenuItem Name="EditRowMenuItem" Header="Редактировать" />
+                        <MenuItem Name="StatusRowMenuItem" Header="Статус" />
+                        <MenuItem Name="TakeMaterialMenuItem" Header="Взять сертификат" />
+                        <MenuItem Name="RemoveMenuItem" Header="Удалить сертификат" />
+                    </ContextMenu>
+                    <ContextMenu x:Key="DataGridMenu">
+                        <MenuItem Name="InsertMenuItem" Header="Добавить" />
+                    </ContextMenu>
+                </Grid.Resources>
+
+                <controls:ProgressRing x:Name="BusyIndicator" Canvas.ZIndex="1" />
+
+                <DataGrid x:Name="DtGridManufacturersCertificates"
+                          AutoGenerateColumns="False"
+                          ContextMenu="{StaticResource DataGridMenu}"
+                          IsReadOnly="True"
+                          SelectionMode="Single"
+                          d:DataContext="{d:DesignInstance warehouseQualityCertificateDomain1:WarehouseQualityCertificateRestLiteDto}">
+                    <DataGrid.RowStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                            <Setter Property="ContextMenu" Value="{StaticResource DataGridRowMenu}" />
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=Rest}" Header="Остаток" />
+                        <DataGridTextColumn Binding="{Binding Path=UnitOfMeasure}" Header="Ед.Изм" />
+                        <DataGridTextColumn Binding="{Binding Path=CreationDate}" Header="Дата добавления" />
+                        <DataGridTextColumn Binding="{Binding Path=Marka}" Header="Марка" />
+                        <DataGridTextColumn Binding="{Binding Path=GostCast}" Header="Гост на марку" />
+                        <DataGridTextColumn Binding="{Binding Path=Mix}" Header="Сортамент" />
+                        <DataGridTextColumn Binding="{Binding Path=GostMix}" Header="Гост на сортамент" />
+                        <DataGridTextColumn Binding="{Binding Path=StandardSize}" Header="Размер" />
+                        <DataGridTextColumn Binding="{Binding Path=NomerCertificata}" Header="Заводской номер сертификата" />
+                        <DataGridTextColumn Binding="{Binding Path=FullRepresentation}" Header="Полное обозначение по госту" />
+                        <DataGridTextColumn Binding="{Binding Path=Cast}" Header="Серия(плавка/партия)" />
+                        <DataGridTextColumn Binding="{Binding Path=Pass}" Header="Допуск" />
+                        <DataGridTextColumn Binding="{Binding Path=ControllerQuality}" Header="Контролер склада" />
+                        <DataGridTextColumn Binding="{Binding Path=ControllerQualityDate}" Header="Контрлер склада дата" />
+                        <DataGridTextColumn Binding="{Binding Path=ControllerQualityDepartment}" Header="Контролер цеха" />
+                        <DataGridTextColumn Binding="{Binding Path=ControllerQualityDepartmentDate}" Header="Контролер цеха дата" />
+                        <DataGridTextColumn Binding="{Binding Path=Customer}" Header="Представитель заказчика" />
+                        <DataGridTextColumn Binding="{Binding Path=CustomerDate}" Header="Представитель заказчика дата" />
+                        <DataGridTextColumn Binding="{Binding Path=Storekeeper}" Header="Кладовщик" />
+                        <DataGridTextColumn Binding="{Binding Path=StorekeeperDate}" Header="Кладовщик Дата" />
+                        <DataGridTextColumn Binding="{Binding Path=UserCreator}" Header="Создатель" />
+                        <DataGridTextColumn Binding="{Binding Path=UserSetState}" Header="Установил состояние" />
+                        <DataGridTextColumn Binding="{Binding Converter={x:Static converters:WarehouseQualityCertificateStateConverter.Instance}, Mode=OneWay, Path=State}" Header="Состояние" />
+                        <DataGridTextColumn Binding="{Binding Path=StateDate}" Header="Дата смены состояния" />
+                        
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

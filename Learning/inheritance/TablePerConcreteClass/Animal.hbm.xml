@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping schema="Parus" assembly="Learning" namespace="Learning.inheritance" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="Animal" abstract="true">
+    <id name="ID" type="Int32">
+      <column name="ID" not-null="true" sql-type="INTEGER" />
+      <generator class="assigned" />
+    </id>
+    <property name="FoodClassification" type="String">
+      <column name="FoodClassification" not-null="true" length="128" sql-type="VARCHAR" />
+    </property>
+    <union-subclass name="Dog" table="Dog">
+      <property name="Breed" type="String">
+        <column name="Breed" not-null="true" length="128" sql-type="VARCHAR" />
+      </property>
+    </union-subclass>
+    
+    <union-subclass name="Snake" table="Snake">
+      <property name="Length" type="Decimal">
+        <column name="Length" not-null="false" sql-type="NUMERIC" />
+      </property>
+      <property name="IsVenomous" type="String">
+        <column name="IsVenomous" not-null="false" sql-type="VARCHAR" />
+      </property>
+    </union-subclass>
+  </class>
+</hibernate-mapping>

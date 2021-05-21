@@ -1,0 +1,99 @@
+﻿<UserControl x:Class="UI.Components.PlanReceipOrderDomain.PlanReceiptOrder.PlanReceiptOrderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:converters="clr-namespace:UI.Components.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:planReceiptOrderDomain="clr-namespace:UI.Infrastructure.ViewModels.PlanReceiptOrderDomain;assembly=UI.Infrastructure"
+             xmlns:planReceiptOrderDomain1="clr-namespace:ParusModelLite.PlanReceiptOrderDomain;assembly=ParusModelLite"
+             x:Name="Root"
+             d:DataContext="{d:DesignInstance planReceiptOrderDomain:IPlanReceiptOrderViewModel}"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ContextMenu x:Key="DataGridRowMenu">
+            <MenuItem Name="InsertRowMenuItem" Header="Добавить" />
+            <MenuItem Name="EditRowMenuItem" Header="Редактировать" />
+            <MenuItem Name="RemoveRowMenuItem" Header="Удалить" />
+            <MenuItem Name="StatusRowMenuItem" Header="Статус" />
+            <MenuItem Name="SetGroupPersonalAccountPlanReceiptOrderRowMenuItem" Header="Установить лицевой счет" />
+        </ContextMenu>
+        <ContextMenu x:Key="DataGridMenu">
+            <MenuItem Name="InsertMenuItem" Header="Добавить" />
+        </ContextMenu>
+    </UserControl.Resources>
+    <Grid VerticalAlignment="Stretch">
+        <GroupBox VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="30" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Предварительные приходные ордера" />
+
+                    <TextBlock Grid.Column="1" Text="Количество выбранных записей: " />
+                    <TextBlock x:Name="TxbSelectedRowsCount" Grid.Column="2" />
+                    <Border Grid.Column="3" />
+                    <TextBlock Grid.Column="4" Text="Количество записей: " />
+                    <TextBlock x:Name="TxbRowsCount" Grid.Column="5" />
+                </Grid>
+            </GroupBox.Header>
+            <Grid x:Name="RootGrid" VerticalAlignment="Stretch">
+             
+                <controls:ProgressRing x:Name="BusyIndicator" Canvas.ZIndex="1" />
+
+                <DataGrid x:Name="DtGridPlanReceiptOrders"
+                          VerticalAlignment="Stretch"
+                          AutoGenerateColumns="False"
+                          ContextMenu="{StaticResource DataGridMenu}"
+                          GridLinesVisibility="All"
+                          IsReadOnly="True"
+                          SelectionMode="Extended"
+                          d:DataContext="{d:DesignInstance planReceiptOrderDomain1:PlanReceiptOrderLiteDto}">
+                    <DataGrid.RowStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                            <Setter Property="ContextMenu" Value="{StaticResource DataGridRowMenu}" />
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=CreationDate}" Header="Дата добавления" />
+                        <DataGridTextColumn Binding="{Binding Path=GroundDocType}" Header="Тип основания накладная" />
+                        <DataGridTextColumn Binding="{Binding Path=GroundDocNumb}" Header="Номер основания накладная" />
+                        <DataGridTextColumn Binding="{Binding Path=GroundDocDate, StringFormat='dd.MM.yyyy'}" Header="Дата основания накладная" />
+                        <DataGridTextColumn Binding="{Binding Path=GroundReceiptDocType}" Header="Тип сопроводительного документа" />
+                        <DataGridTextColumn Binding="{Binding Path=GroundReceiptDocNumb}" Header="Номер сопроводительного документа" />
+                        <DataGridTextColumn Binding="{Binding Path=GroundReceiptDocDate, StringFormat='dd.MM.yyyy'}" Header="Дата сопроводительного документа" />
+                        <DataGridTextColumn Binding="{Binding Path=Note}" Header="Примечание" />
+                        <DataGridTextColumn Header="Номер">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{1}-{0}">
+                                    <Binding Mode="OneWay" Path="Numb" />
+                                    <Binding Mode="OneWay" Path="Pref" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=Department}" Header="Подразделение" />
+                        <DataGridTextColumn Header="Состояние">
+                            <DataGridTextColumn.Binding>
+                                <Binding Converter="{x:Static converters:PlanReceiptOrderStateConverter.Instance}"
+                                         Mode="OneWay"
+                                         Path="State" />
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=StateDate}" Header="Дата смены состояния" />
+                        <DataGridTextColumn Binding="{Binding Path=Store}" Header="Склад" />
+                        <DataGridTextColumn Binding="{Binding Path=Contractor}" Header="Контрагент" />
+                        <DataGridTextColumn Binding="{Binding Path=Creator}" Header="Создатель" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

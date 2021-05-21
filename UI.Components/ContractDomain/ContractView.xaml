@@ -1,0 +1,170 @@
+﻿<UserControl x:Class="UI.Components.ContractDomain.ContractView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:contractDomain="clr-namespace:ParusModelLite.ContractDomain;assembly=ParusModelLite"
+             xmlns:contractDomain1="clr-namespace:UI.Infrastructure.ViewModels.ContractDomain;assembly=UI.Infrastructure"
+             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:converters="clr-namespace:UI.Components.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DataContext="{d:DesignInstance contractDomain1:IContractViewModel}"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <Grid VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+        <GroupBox>
+            <GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Договора" />
+                    <CheckBox x:Name="CkbShowCloseContracts"
+                              Grid.Column="1"
+                              HorizontalAlignment="Right"
+                              Checked="CkbShowCloseContracts_Checked"
+                              Content="Показать закрытые"
+                              Unchecked="CkbShowCloseContracts_Checked" />
+                </Grid>
+            </GroupBox.Header>
+            <Grid VerticalAlignment="Stretch">
+                <controls:ProgressRing x:Name="BusyIndicator" Canvas.ZIndex="1" />
+                <DataGrid x:Name="DtGridContract"
+                          VerticalAlignment="Stretch"
+                          AutoGenerateColumns="False"
+                          GridLinesVisibility="All"
+                          IsReadOnly="True"
+                          SelectionMode="Extended"
+                          d:DataContext="{d:DesignInstance contractDomain:ContractLiteDto}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=ExtNumber}" Header="Внешний номер" />
+                        <DataGridTextColumn Header="Действуе с по">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0:dd.mm.yyyy}-{1:dd.mm.yyyy}">
+                                    <Binding Mode="OneWay" Path="BeginDate" />
+                                    <Binding Mode="OneWay" Path="EndDate" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="Состояние">
+                            <DataGridTextColumn.Binding>
+                                <Binding Converter="{x:Static converters:ContractStateConverter.Instance}"
+                                         Mode="OneWay"
+                                         Path="State" />
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Path=ContractorAgent}" Header="Поставщик" />
+                        <DataGridTextColumn Binding="{Binding Path=StaffingDivision}" Header="Подразделение" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Row="1"
+                  VerticalAlignment="Stretch"
+                  VerticalContentAlignment="Stretch">
+            <GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Этапы договора" />
+                    <CheckBox x:Name="CkbShowCloseStages"
+                              Grid.Column="1"
+                              HorizontalAlignment="Right"
+                              Checked="CkbShowCloseStages_Unchecked"
+                              Content="Показать закрытые"
+                              Unchecked="CkbShowCloseStages_Unchecked" />
+
+                </Grid>
+            </GroupBox.Header>
+            <Grid VerticalAlignment="Stretch">
+                <controls:ProgressRing x:Name="BusyIndicatorStage" Canvas.ZIndex="1" />
+                <DataGrid x:Name="DtGridStage"
+                          VerticalAlignment="Stretch"
+                          AutoGenerateColumns="False"
+                          GridLinesVisibility="All"
+                          IsReadOnly="True"
+                          SelectionMode="Extended"
+                          d:DataContext="{d:DesignInstance contractDomain:StagesOfTheContractLiteDto}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=Numb}" Header="№ этапа" />
+                        <DataGridTextColumn Binding="{Binding Path=PersonalAccountNumb}" Header="Лицевой счет" />
+                        <DataGridTextColumn Header="Состояние">
+                            <DataGridTextColumn.Binding>
+                                <Binding Converter="{x:Static converters:ContractStateConverter.Instance}"
+                                         Mode="OneWay"
+                                         Path="State" />
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Действуе с по">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0:dd.mm.yyyy}-{1:dd.mm.yyyy}">
+                                    <Binding Mode="OneWay" Path="BeginDate" />
+                                    <Binding Mode="OneWay" Path="EndDate" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Binding="{Binding Path=Description}" Header="Описание этапа" />
+                        <DataGridTextColumn Binding="{Binding Path=Comments}" Header="Примечание" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Row="2"
+                  VerticalAlignment="Stretch"
+                  VerticalContentAlignment="Stretch">
+            <GroupBox.Header>
+                <TextBlock Text="График поступления ТМЦ по лицевому счету" />
+            </GroupBox.Header>
+            <Grid VerticalAlignment="Stretch">
+                <controls:ProgressRing x:Name="BusyIndicatorPlanAndSpecification" Canvas.ZIndex="1" />
+                <DataGrid x:Name="DtGridPlanAndSpecification"
+                          VerticalAlignment="Stretch"
+                          AutoGenerateColumns="False"
+                          GridLinesVisibility="All"
+                          IsReadOnly="True"
+                          SelectionMode="Extended"
+                          d:DataContext="{d:DesignInstance contractDomain:PlanAndSpecificationLiteDto}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Действуе с по">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0:dd.mm.yyyy}-{1:dd.mm.yyyy}">
+                                    <Binding Mode="OneWay" Path="BeginDate" />
+                                    <Binding Mode="OneWay" Path="EndDate" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Binding="{Binding Path=Price}" Header="Цена" />
+                        <DataGridTextColumn Binding="{Binding Path=Quant}" Header="Количество" />
+                        <DataGridTextColumn Header="Номенклатура">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0} ({1})">
+                                    <Binding Mode="OneWay" Path="NomenclatureNumberName" />
+                                    <Binding Mode="OneWay" Path="NomenclatureNumberCode" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Модификация номенклатуры">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0} ({1})">
+                                    <Binding Mode="OneWay" Path="NomenclatureNumberModificationName" />
+                                    <Binding Mode="OneWay" Path="NomenclatureNumberModificationCode" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

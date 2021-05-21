@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping schema="PARUS" assembly="Learning" namespace="Learning" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="User" table="TB_TEST_USERS">
+    <id name="Rn" type="Int64">
+      <column name="Rn" not-null="true" />
+      <generator class="identity" />
+    </id>
+    <property name="Name" type="String" insert="false">
+      <column name="Name" not-null="true" />
+    </property>
+
+    <sql-insert callable="true" check="none">
+       BEGIN
+         P_INSERT_TEST(RN => :NHIDOUTPARAM);
+       END;
+    </sql-insert>
+    
+  </class>
+</hibernate-mapping>
